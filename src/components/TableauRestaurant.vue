@@ -6,15 +6,44 @@
 
             <md-tabs md-dynamic-height>
                 <md-tab md-label="General">
-                    <md-field>
-                        <label>Nom du Restaurant :</label>
-                        <md-input v-model="actualRestaurant.name" editable=false></md-input>
-                    </md-field>
+                    <span class="tableSetValuesRest">
+                        <h1>Données Restaurant</h1>
+                        <md-field>
+                            <label>Nom du Restaurant :</label>
+                            <md-input v-model="actualRestaurant.name" readonly></md-input>
+                        </md-field>
 
-                    <md-field>
-                        <label>Cuisine du Restaurant :</label>
-                        <md-input v-model="actualRestaurant.cuisine" editable=false></md-input>
-                    </md-field>
+                        <md-field>
+                            <label>Cuisine du Restaurant :</label>
+                            <md-input v-model="actualRestaurant.cuisine" readonly></md-input>
+                        </md-field>
+                    </span>
+                    <span class="tableSetValuesRest">
+                        <template v-if="actualRestaurant.address != undefined">
+                            <h1>Adresse</h1>
+                            <md-field>
+                                <label>Ville :</label>
+                                <md-input v-model="actualRestaurant.borough" readonly></md-input>
+                            </md-field>  
+                            <md-field>
+                                <label>Rue :</label>
+                                <md-input v-model="actualRestaurant.address.street" readonly></md-input>
+                            </md-field>  
+                            <md-field>
+                                <label>Building</label>
+                                <md-input v-model="actualRestaurant.address.building" readonly></md-input>
+                            </md-field>
+                            <md-field>
+                                <label>Coordonnées</label>
+                                <md-input v-model="actualRestaurant.address.coord[0]" readonly></md-input>
+                                <md-input v-model="actualRestaurant.address.coord[1]" readonly></md-input>
+                            </md-field>
+                            <md-field>         
+                                <label>ZipCode:</label>
+                                <md-input v-model="actualRestaurant.address.zipcode" readonly></md-input>
+                            </md-field>
+                        </template>
+                    </span>
                 </md-tab>
 
                 <md-tab md-label="Modification des données">
@@ -190,7 +219,6 @@ export default {
         },
         ajouterRestaurant(event) {
             event.preventDefault();
-            console.log(event);
             this.restaurants.push(
                 {
                     name: this.nom,
@@ -233,7 +261,6 @@ export default {
             this.getRestaurantFromServer ();
         },
         decreasePage () {
-            console.log(this.$refs.buttonPrecedant);
             this.page--;
             if (this.page <= 1) {
                 this.page = 1;
@@ -245,7 +272,6 @@ export default {
         }
     },
     mounted: function () {
-        console.log("???");
         this.getRestaurantFromServer ();
 
         if (this.page <= 1) {
@@ -318,5 +344,12 @@ export default {
 
     .md-table-row:nth-child(2n+1) {
         background-color: rgb(250, 250, 255);
+    }
+
+    .tableSetValuesRest {
+        display: inline-block;
+        padding: 1em;
+        width: calc(50% - 2em);
+        vertical-align: top;
     }
 </style>
