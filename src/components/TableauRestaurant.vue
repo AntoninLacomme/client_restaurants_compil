@@ -2,7 +2,7 @@
     <div>
         <!-- DEBUT zone de dialogue pour les données d'un restaurant -->
         <md-dialog :md-active.sync="showDialogDataRestaurant">
-            <md-dialog-title>Preferences</md-dialog-title>
+            <md-dialog-title>Données du Restaurant</md-dialog-title>
 
             <md-tabs md-dynamic-height>
                 <md-tab md-label="General">
@@ -18,11 +18,11 @@
                             <md-input v-model="actualRestaurant.cuisine" readonly></md-input>
                         </md-field>
                     </span>
-                    <span class="tableSetValuesRest">
-                        <template v-if="actualRestaurant.address != undefined">
+                    <template v-if="actualRestaurant.address != undefined">
+                        <span class="tableSetValuesRest">                        
                             <h1>Adresse</h1>
                             <md-field>
-                                <label>Ville :</label>
+                                <label>Quartier :</label>
                                 <md-input v-model="actualRestaurant.borough" readonly></md-input>
                             </md-field>  
                             <md-field>
@@ -42,8 +42,21 @@
                                 <label>ZipCode:</label>
                                 <md-input v-model="actualRestaurant.address.zipcode" readonly></md-input>
                             </md-field>
-                        </template>
-                    </span>
+                            
+                        </span>
+                    </template>
+                    <template v-if="actualRestaurant.grades != undefined">
+                        <span class="tableSetValuesRest">
+                            <h1>Grades</h1>
+                            <md-table v-model="actualRestaurant.grades">
+                                <md-table-row slot="md-table-row" slot-scope="{item}" md-selectable="single">
+                                    <md-table-cell md-label="Date">{{item.date}}</md-table-cell>
+                                    <md-table-cell md-label="Grade">{{item.grade}}</md-table-cell>
+                                    <md-table-cell md-label="Score">{{item.score}}</md-table-cell>
+                                </md-table-row>
+                            </md-table>
+                        </span>
+                    </template>
                 </md-tab>
 
                 <md-tab md-label="Modification des données">
@@ -98,7 +111,7 @@
         <md-app>
         <md-app-toolbar class="md-primary">
             <span class="md-title">Vos Meilleurs Restaurants ({{restaurants.length}}):</span>
-            <md-button class="md-raised" @click="showDialogAddRestaurant = true">Ajouter Restaurant</md-button>
+            <md-button class="md-raised buttonAlignRight" @click="showDialogAddRestaurant = true">Ajouter Restaurant</md-button>
         </md-app-toolbar>
 
         <md-app-drawer md-permanent="clipped">
@@ -174,12 +187,6 @@ export default {
             console.log(item);
             if (item != null) {
                 this.actualRestaurant = item;
-            } else {
-                this.actualRestaurant = {
-                    _id: "",
-                    name: "",
-                    cuisine: ""
-                };
             }
         },
         getRestaurantFromServer () {
@@ -284,6 +291,9 @@ export default {
 </script>
 
 <style scoped>
+    button.buttonAlignRight {
+        float: right;
+    }
 
     div.little-box  {
         border: solid thin black;    
@@ -348,8 +358,12 @@ export default {
 
     .tableSetValuesRest {
         display: inline-block;
-        padding: 1em;
-        width: calc(50% - 2em);
+        padding: 0.5em;
+        margin: 0.5em;
+        max-width: calc(33% -1em);
+        max-height: 600px;
         vertical-align: top;
+
+        border: solid thin rgba(200, 200, 200, 0.12);
     }
 </style>
