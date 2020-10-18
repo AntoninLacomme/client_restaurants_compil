@@ -1,5 +1,49 @@
 <template>
     <div>
+        <md-dialog :md-active.sync="showDialog">
+        <md-dialog-title>Preferences</md-dialog-title>
+
+        <md-tabs md-dynamic-height>
+            <md-tab md-label="General">
+                <md-field>
+                    <label>Nom du Restaurant :</label>
+                    <md-input v-model="actualRestaurant.name" editable=false></md-input>
+                </md-field>
+
+                <md-field>
+                    <label>Cuisine du Restaurant :</label>
+                    <md-input v-model="actualRestaurant.cuisine" editable=false></md-input>
+                </md-field>
+            </md-tab>
+
+            <md-tab md-label="Modification des données">
+                <form @submit.prevent="modifiedRestaurant">
+                    <md-field>
+                        <label>Nom du Restaurant</label>
+                        <md-input name="nom" v-model="actualRestaurant.name"></md-input>
+                    </md-field>
+                    <md-field>
+                        <label>Type de Cuisine</label>
+                        <md-input name="cuisine" v-model="actualRestaurant.cuisine"></md-input>
+                    </md-field>              
+                    <md-button type="submit" class="md-raised">Valider Modification</md-button>
+                </form>
+            </md-tab>
+
+        <md-tab md-label="Supprimer le Restaurant">
+            <p>Voulez vous vraiment supprimer définitevement ce restaurant ?</p>
+            <form v-on:submit="supprimerRestaurant">
+                <md-button type="submit" class="md-raised">Supprimer le Restaurant</md-button>
+            </form>
+        </md-tab>
+      </md-tabs>
+
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
+
         <md-app>
         <md-app-toolbar class="md-primary">
             <span class="md-title">Vos Meilleurs Restaurants ({{restaurants.length}}):</span>
@@ -45,36 +89,13 @@
                     <md-button class="md-raised" :md-ripple="false" v-on:click="increasePage()">Suivant</md-button>
                 </md-list-item>
 
-                <md-list-item class="listbrd">
-                    <template v-if ="vindex===1">
-                    <md-card class="md-layout-item">
-                        <md-card-header>
-                        <div class="md-title">Modification des données du<br> restaurant</div>
-                        </md-card-header>
-                        <form v-on:submit="supprimerRestaurant" class="padd1em">
-                            <md-button type="submit" class="md-raised">Supprimer le Restaurant</md-button>
-                        </form>
-                        
-                        <form @submit.prevent="modifiedRestaurant" class="padd1em">
-                            <md-field>
-                                <label>Nom du Restaurant</label>
-                                    <md-input name="nom" v-model="actualRestaurant.name"></md-input>
-                                </md-field>
-                                <md-field>
-                                    <label>Type de Cuisine</label>
-                                    <md-input name="cuisine" v-model="actualRestaurant.cuisine"></md-input>
-                                </md-field>              
-                                <md-button type="submit" class="md-raised">Valider Modification</md-button>
-                            </form>
-                        </md-card>
-                        </template>
-                    </md-list-item>
+                
                 </md-list>
             </md-app-drawer>
 
             <md-app-content>
                 <md-table v-model="restaurants" md-card @md-selected="onSelect">
-                    <md-table-row slot="md-table-row" slot-scope="{item}" md-selectable="single">
+                    <md-table-row @click="showDialog = true" slot="md-table-row" slot-scope="{item}" md-selectable="single">
                         <md-table-cell md-label="Name">{{item.name}}</md-table-cell>
                         <md-table-cell md-label="Cuisine">{{item.cuisine}}</md-table-cell>
                     </md-table-row>
@@ -106,8 +127,12 @@ export default {
             keywordRestaurant: '',
             lastTimeScroll: 0,
             vindex: -1,
-            actualRestaurant: null,
-            menuVisible: false
+            actualRestaurant: {
+                _id: "",
+                name: "",
+                cuisine: ""
+            },
+            showDialog: false
         }
     ),
     methods: {
@@ -135,7 +160,6 @@ export default {
                 })
                 .then ((response) => {
                     this.restaurants = response.data;
-                    console.log(this.restaurants.length);
                 });
         },
         supprimerRestaurant(event) {
@@ -148,15 +172,8 @@ export default {
         },
         modifiedRestaurant (event) {
             event.preventDefault ();
-
             let donneesFormulaire = new FormData(event.target);
-            console.log(event.target);
-
-
-
-
             let url = "http://127.0.0.1:8080/api/restaurants/" + this.actualRestaurant._id;
-
             fetch(url, {
                 method: "PUT",
                 body: donneesFormulaire
@@ -188,7 +205,6 @@ export default {
                     cuisine: this.cuisine
                 })
             }).then (() => {
-                //console.log(data);
             });
 
             this.nom = "";
