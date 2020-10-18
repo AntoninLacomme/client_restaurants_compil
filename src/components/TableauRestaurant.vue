@@ -97,7 +97,7 @@
 
             <md-app-content>
                 <md-table v-model="restaurants" md-card @md-selected="onSelect">
-                    <md-table-row @click="showDialog = true" slot="md-table-row" slot-scope="{item}" md-selectable="single">
+                    <md-table-row @click="showDialogDataRestaurant = true" slot="md-table-row" slot-scope="{item}" md-selectable="single">
                         <md-table-cell md-label="Name">{{item.name}}</md-table-cell>
                         <md-table-cell md-label="Cuisine">{{item.cuisine}}</md-table-cell>
                     </md-table-row>
@@ -128,7 +128,6 @@ export default {
             page: 1,
             keywordRestaurant: '',
             lastTimeScroll: 0,
-            vindex: -1,
             actualRestaurant: {
                 _id: "",
                 name: "",
@@ -143,15 +142,16 @@ export default {
             this.menuVisible = !this.menuVisible
         },
         onSelect (item) {
+            console.log(item);
             if (item != null) {
-                this.vindex = 1;
                 this.actualRestaurant = item;
             } else {
-                this.vindex = -1;
-                this.actualRestaurant = null;
+                this.actualRestaurant = {
+                    _id: "",
+                    name: "",
+                    cuisine: ""
+                };
             }
-
-            console.log(this.vindex);
         },
         getRestaurantFromServer () {
             let url = "http://127.0.0.1:8080/api/restaurants?pagesize=" + this.nbRestaurants;
@@ -185,7 +185,6 @@ export default {
                 responseJSON.json()
                     .then(() => {
                         this.getRestaurantFromServer ();
-                        this.vindex = -1;
                     });
                 });
         },
