@@ -1,52 +1,75 @@
 <template>
     <div>
-        <md-dialog :md-active.sync="showDialog">
-        <md-dialog-title>Preferences</md-dialog-title>
+        <!-- DEBUT zone de dialogue pour les données d'un restaurant -->
+        <md-dialog :md-active.sync="showDialogDataRestaurant">
+            <md-dialog-title>Preferences</md-dialog-title>
 
-        <md-tabs md-dynamic-height>
-            <md-tab md-label="General">
-                <md-field>
-                    <label>Nom du Restaurant :</label>
-                    <md-input v-model="actualRestaurant.name" editable=false></md-input>
-                </md-field>
+            <md-tabs md-dynamic-height>
+                <md-tab md-label="General">
+                    <md-field>
+                        <label>Nom du Restaurant :</label>
+                        <md-input v-model="actualRestaurant.name" editable=false></md-input>
+                    </md-field>
 
-                <md-field>
-                    <label>Cuisine du Restaurant :</label>
-                    <md-input v-model="actualRestaurant.cuisine" editable=false></md-input>
-                </md-field>
-            </md-tab>
+                    <md-field>
+                        <label>Cuisine du Restaurant :</label>
+                        <md-input v-model="actualRestaurant.cuisine" editable=false></md-input>
+                    </md-field>
+                </md-tab>
 
-            <md-tab md-label="Modification des données">
-                <form @submit.prevent="modifiedRestaurant">
+                <md-tab md-label="Modification des données">
+                    <form @submit.prevent="modifiedRestaurant">
+                        <md-field>
+                            <label>Nom du Restaurant</label>
+                            <md-input name="nom" v-model="actualRestaurant.name"></md-input>
+                        </md-field>
+                        <md-field>
+                            <label>Type de Cuisine</label>
+                            <md-input name="cuisine" v-model="actualRestaurant.cuisine"></md-input>
+                        </md-field>              
+                        <md-button type="submit" class="md-raised">Valider Modification</md-button>
+                    </form>
+                </md-tab>
+
+                <md-tab md-label="Supprimer le Restaurant">
+                    <p>Voulez vous vraiment supprimer définitevement ce restaurant ?</p>
+                    <form v-on:submit="supprimerRestaurant">
+                        <md-button type="submit" class="md-raised">Supprimer le Restaurant</md-button>
+                    </form>
+                </md-tab>
+            </md-tabs>
+
+            <md-dialog-actions>
+                <md-button class="md-primary" @click="showDialogDataRestaurant = false">Close</md-button>
+            </md-dialog-actions>
+        </md-dialog>
+        <!-- FIN zone de dialogue pour les données d'un restaurant -->
+
+
+        <!-- DEBUT ajout d'un nouveau Restaurant -->
+        <md-dialog :md-active.sync="showDialogAddRestaurant">
+            <md-dialog-title>Ajouter un nouveau Restaurant</md-dialog-title>
+                <form v-on:submit="ajouterRestaurant" class="padd1em">
                     <md-field>
                         <label>Nom du Restaurant</label>
-                        <md-input name="nom" v-model="actualRestaurant.name"></md-input>
+                        <md-input v-model="nom"></md-input>
                     </md-field>
                     <md-field>
                         <label>Type de Cuisine</label>
-                        <md-input name="cuisine" v-model="actualRestaurant.cuisine"></md-input>
-                    </md-field>              
-                    <md-button type="submit" class="md-raised">Valider Modification</md-button>
+                        <md-input v-model="cuisine"></md-input>
+                    </md-field>
+                    <md-button type="submit" class="md-raised">Ajouter ce Restaurant</md-button>
                 </form>
-            </md-tab>
-
-        <md-tab md-label="Supprimer le Restaurant">
-            <p>Voulez vous vraiment supprimer définitevement ce restaurant ?</p>
-            <form v-on:submit="supprimerRestaurant">
-                <md-button type="submit" class="md-raised">Supprimer le Restaurant</md-button>
-            </form>
-        </md-tab>
-      </md-tabs>
-
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
+            <md-dialog-actions>
+                <md-button class="md-primary" @click="showDialogAddRestaurant = false">Close</md-button>
+            </md-dialog-actions>
+        </md-dialog>
+        <!-- FIN ajout d'un nouveau Restaurant -->
 
         <md-app>
         <md-app-toolbar class="md-primary">
             <span class="md-title">Vos Meilleurs Restaurants ({{restaurants.length}}):</span>
+            <md-button class="md-raised" @click="showDialogAddRestaurant = true">Ajouter Restaurant</md-button>
         </md-app-toolbar>
 
         <md-app-drawer md-permanent="clipped">
@@ -55,27 +78,6 @@
             </md-toolbar>
 
             <md-list>
-                <md-list-item class="listbrd">
-                    <table>
-                        <tr><td><span class="md-title">Ajouter un nouveau Restaurant :</span></td></tr>
-                        <tr>
-                            <td>
-                                <form v-on:submit="ajouterRestaurant">
-                                    <md-field>
-                                        <label>Nom du Restaurant</label>
-                                        <md-input v-model="nom"></md-input>
-                                    </md-field>
-                                    <md-field>
-                                        <label>Type de Cuisine</label>
-                                        <md-input v-model="cuisine"></md-input>
-                                    </md-field>
-                                    <md-button type="submit" class="md-raised">Ajouter ce Restaurant</md-button>
-                                </form>
-                            </td>
-                        </tr>
-                    </table>
-                </md-list-item>
-
                 <md-list-item class="listbrd">                    
                     <md-field md-clearable class="md-toolbar-section-end">
                         <md-input placeholder="Search by name..." @input="textChange" />
@@ -132,7 +134,8 @@ export default {
                 name: "",
                 cuisine: ""
             },
-            showDialog: false
+            showDialogDataRestaurant: false,
+            showDialogAddRestaurant: false
         }
     ),
     methods: {
