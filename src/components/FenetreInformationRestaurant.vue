@@ -82,7 +82,7 @@
 
                     <md-field>
                         <label>Grade</label>
-                        <md-select v-model="grade" name="grade">
+                        <md-select v-model="gradeLabel" name="grade">
                             <md-option value="A">A</md-option>
                             <md-option value="B">B</md-option>
                             <md-option value="C">C</md-option>
@@ -95,12 +95,13 @@
                 </form>
             </md-tab>
 
+<!--
             <md-tab md-label="Supprimer le Restaurant">
                 <p>Voulez vous vraiment supprimer définitevement ce restaurant ?</p>
                 <form v-on:submit="supprimerRestaurant">
                     <md-button type="submit" class="md-raised">Supprimer le Restaurant</md-button>
                 </form>
-            </md-tab>
+            </md-tab>-->
         </md-tabs>
 
         <md-dialog-actions>
@@ -126,13 +127,14 @@ export default {
 
     data : () => ({
         showDialogDataRestaurant: false,
-        selectedDate: false,
+        selectedDate: new Date (),
         actualRestaurant: {
-                _id: "",
-                name: "",
-                cuisine: "",
-                grades: undefined
-            },
+            _id: "",
+            name: "",
+            cuisine: "",
+            grades: undefined
+        },
+        gradeLabel: "A"
     }),
 
     methods : {
@@ -140,11 +142,12 @@ export default {
             this.actualRestaurant = restaurant;
             this.showDialogDataRestaurant = !this.showDialogDataRestaurant;
         },
-        ajouterRestaurant (restaurant) {
-            console.log(restaurant);
+        modifiedRestaurant (event) {
+            console.log("modified - FenetreInformationRestaurant");
+            this.$parent.modifiedRestaurant(event);
         },
-        supprimerRestaurant (restaurant) {
-            console.log(restaurant);
+        supprimerRestaurant (event) {
+            this.$parent.supprimerRestaurant (event);
         }
     }
 }
