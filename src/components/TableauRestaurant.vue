@@ -48,7 +48,7 @@
                 </md-list-item>
 
                 
-                </md-list>
+            </md-list>
             </md-app-drawer>
 
             <md-app-content>
@@ -56,7 +56,6 @@
                     <md-table-row slot="md-table-row" slot-scope="{item}" md-selectable="single">
                         <md-table-cell md-label="Name" md-sort-by="name">{{item.name}}</md-table-cell>
                         <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{item.cuisine}}</md-table-cell>
-                        <md-table-cell class="cell-delete" @click="deleteRestaurant"><md-icon>delete</md-icon></md-table-cell>
                     </md-table-row>
                 </md-table>
             </md-app-content>
@@ -120,8 +119,12 @@ export default {
                 this.getRestaurantFromServer ();
             });
         },
-        deleteRestaurant (event) {
-            console.log(event);
+        deleteRestaurant (resto) {
+            fetch ("http://127.0.0.1:8080/api/restaurants/" + resto._id, {
+                method: "DELETE"
+            }).then (() => {
+                this.getRestaurantFromServer ();
+            });
         },
         modifiedRestaurant (event) {
             event.preventDefault ();
@@ -205,10 +208,6 @@ export default {
 </script>
 
 <style scoped>
-    .cell-delete {
-        width: 50px;
-        background-color: brown;
-    }
 
     .buttonAlignRight {
         right: 1em;
@@ -276,10 +275,4 @@ export default {
     .md-table-row:nth-child(2n+1) {
         background-color: rgb(250, 250, 255);
     }
-
-    .md-table-row:hover > .cell-delete {
-        
-    }
-
-    
 </style>
