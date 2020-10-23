@@ -3,7 +3,7 @@
         <!-- DEBUT zone de dialogue pour les données d'un restaurant -->
         <FenetreInformationRestaurant :restaurant="{restaurant: actualRestaurant}" ref="fenInfRest"/>
         <!-- DEBUT ajout d'un nouveau Restaurant -->
-        <md-dialog :md-active.sync="showDialogAddRestaurant">
+        <!-- <md-dialog :md-active.sync="showDialogAddRestaurant">
             <md-dialog-title>Ajouter un nouveau Restaurant</md-dialog-title>
                 <form v-on:submit="ajouterRestaurant" class="padd1em">
                     <md-field>
@@ -19,7 +19,7 @@
             <md-dialog-actions>
                 <md-button class="md-primary" @click="showDialogAddRestaurant = false">Close</md-button>
             </md-dialog-actions>
-        </md-dialog>
+        </md-dialog> -->
         <!-- FIN ajout d'un nouveau Restaurant -->
 
         <md-app class='main'>
@@ -110,8 +110,6 @@ export default {
             countRestaurants: 0,
             messCountRestaurants: "",
             messNbPages: "",
-            nom: '',
-            cuisine: '',
             nbRestaurants: 13,
             page: 1,
             keywordRestaurant: '',
@@ -127,6 +125,7 @@ export default {
     ),
     methods: {
         onSelect (item) {
+            console.log(item);
             if (item != undefined) {
                 if (item != null) {
                     this.actualRestaurant = item;
@@ -192,20 +191,7 @@ export default {
                     });
                 });
         },
-        ajouterRestaurant(event) {
-            event.preventDefault();
-            let donneesFormulaire = new FormData(event.target);
-            let url = "http://127.0.0.1:8080/api/restaurants";
-            fetch (url, {
-                method: "POST",
-                body: donneesFormulaire
-            }).then (() => {
-                this.getRestaurantFromServer ();
-            });
-
-            this.nom = "";
-            this.cuisine = "";
-        },
+        
         getColor(index) {
             return (index % 2) ? 'lightBlue' : 'pink';
         },

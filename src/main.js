@@ -1,12 +1,13 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
 
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 
-import TableauRestaurant from './components/TableauRestaurant.vue'
-import RestaurantDetail from './components/RestaurantDetail.vue'
+import TableauRestaurant from './components/TableauRestaurant.vue';
+import RestaurantDetail from './components/RestaurantDetail.vue';
+import NewRestaurant from './components/NewRestaurant.vue';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 Vue.use(VueRouter);
 
 const router = new VueRouter ({
@@ -18,6 +19,10 @@ const router = new VueRouter ({
       {
         path: '/RestaurantDetail',
         component: RestaurantDetail
+      },
+      {
+        path: '/NewRestaurant',
+        component: NewRestaurant
       }
     ],
     mode: 'history'
