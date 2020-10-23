@@ -54,10 +54,19 @@
                     <md-button class="md-raised md-primary" @click="setDoneAddress('second', 'third')">Continue</md-button>
                 </md-step>
 
-                <md-step id="third" md-label="Third Step">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                    
+                <md-step id="third" md-label="Grades" md-description="Les notes obtenues (optionnel)">
+                    <md-table v-model="grades" md-card>
+                        <md-table-row slot="md-table-row" slot-scope="{item}">
+                            <md-table-cell md-label="Date">{{item.date}}</md-table-cell>
+                            <md-table-cell md-label="grade">{{item.grade}}</md-table-cell>
+                            <md-table-cell md-label="score">{{item.score}}</md-table-cell>
+                        </md-table-row>
+                    </md-table>
+
+                    <GradeRestaurant/>
+
+
+
                     <md-button class="md-raised md-primary" @click="setDone('third', 'second')">Back</md-button>
                     <md-button type="submit" class="md-raised md-primary" @click="setDone('third')">Valider Formulaire</md-button>
                 </md-step>
@@ -69,10 +78,14 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, between } from 'vuelidate/lib/validators'
+import GradeRestaurant from './grades/GradeRestaurant.vue'
 
 export default {
     name: 'NewRestaurant',
     mixins: [validationMixin],
+    components: {
+        GradeRestaurant
+    },
     data: () => ({
         form: {
             nom: "",
@@ -91,12 +104,15 @@ export default {
             "Staten Island"
         ],
 
-        active: 'first',
+        active: 'third',
         general: false,
         second: false,
         third: false,
 
-        sending: false
+        sending: false,
+
+
+        grades: {}
     }),
     validations : {
         form: {
