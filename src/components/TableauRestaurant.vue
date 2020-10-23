@@ -79,6 +79,22 @@
 
 
 <script>
+import Vue from 'vue'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+Vue.use(VueMaterial)
+
+import * as VueGoogleMaps from 'vue2-google-maps'
+ 
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyBjjdVYZrjcMbzJ6KS37f06P_ltlxjI2dE',
+    libraries: 'places'
+  }
+})
+
+
 import FenetreInformationRestaurant from './FenetreInformationRestaurant.vue';
 import _ from "lodash";
 
@@ -178,21 +194,11 @@ export default {
         },
         ajouterRestaurant(event) {
             event.preventDefault();
-            this.restaurants.push(
-                {
-                    name: this.nom,
-                    cuisine: this.cuisine
-                }
-            );
-
+            let donneesFormulaire = new FormData(event.target);
             let url = "http://127.0.0.1:8080/api/restaurants";
             fetch (url, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    nom: this.nom,
-                    cuisine: this.cuisine
-                })
+                body: donneesFormulaire
             }).then (() => {
                 this.getRestaurantFromServer ();
             });
@@ -206,11 +212,11 @@ export default {
         sliderChange (event) {
             this.lastTimeScroll = event.timeStamp;
         },
-        sliderCharge: _.debouce (() => {
+        sliderCharge : _.debounce (function () {
             this.$refs.fenInfRest.closeDialogRestaurant ();
             this.getRestaurantFromServer ();
         }, 300),
-        textChange : _.debouce((inputText) => {
+        textChange : _.debounce (function (inputText) {
             this.keywordRestaurant = inputText;
             this.$refs.fenInfRest.closeDialogRestaurant ();
             this.getRestaurantFromServer ();            
