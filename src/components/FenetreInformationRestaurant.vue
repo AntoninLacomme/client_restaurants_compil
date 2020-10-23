@@ -4,55 +4,55 @@
 
         <md-tabs>
             <md-tab md-label="General">
-                    <span class="tableSetValuesRest">
-                        <h1>Données Restaurant</h1>
-                        <md-field>
-                            <label>Nom du Restaurant :</label>
-                            <md-input v-model="actualRestaurant.name" readonly></md-input>
-                        </md-field>
+                <span class="tableSetValuesRest">
+                    <h1>Données Restaurant</h1>
+                    <md-field>
+                        <label>Nom du Restaurant :</label>
+                        <md-input v-model="actualRestaurant.name" readonly></md-input>
+                    </md-field>
 
+                    <md-field>
+                        <label>Cuisine du Restaurant :</label>
+                        <md-input v-model="actualRestaurant.cuisine" readonly></md-input>
+                    </md-field>
+                </span>
+                <template v-if="actualRestaurant.address != undefined">  
+                    <span class="tableSetValuesRest">                        
+                        <h1>Adresse<span class="search-map" @click="searchOnGoogleMap"><md-icon>search</md-icon></span></h1>
                         <md-field>
-                            <label>Cuisine du Restaurant :</label>
-                            <md-input v-model="actualRestaurant.cuisine" readonly></md-input>
+                            <label>Quartier :</label>
+                            <md-input v-model="actualRestaurant.borough" readonly></md-input>
+                        </md-field>  
+                        <md-field>
+                            <label>Rue :</label>
+                            <md-input v-model="actualRestaurant.address.street" readonly></md-input>
+                        </md-field>  
+                        <md-field>
+                            <label>Building</label>
+                            <md-input v-model="actualRestaurant.address.building" readonly></md-input>
+                        </md-field>
+                        <md-field>
+                            <label>Coordonnées</label>
+                            <md-input v-model="actualRestaurant.address.coord[0]" readonly></md-input>
+                            <md-input v-model="actualRestaurant.address.coord[1]" readonly></md-input>
+                        </md-field>
+                        <md-field>         
+                            <label>ZipCode:</label>
+                            <md-input v-model="actualRestaurant.address.zipcode" readonly></md-input>
                         </md-field>
                     </span>
-                    <template v-if="actualRestaurant.address != undefined">    
-                        <span class="tableSetValuesRest">                        
-                            <h1>Adresse<span class="search-map" @click="searchOnGoogleMap"><md-icon>search</md-icon></span></h1>
-                            <md-field>
-                                <label>Quartier :</label>
-                                <md-input v-model="actualRestaurant.borough" readonly></md-input>
-                            </md-field>  
-                            <md-field>
-                                <label>Rue :</label>
-                                <md-input v-model="actualRestaurant.address.street" readonly></md-input>
-                            </md-field>  
-                            <md-field>
-                                <label>Building</label>
-                                <md-input v-model="actualRestaurant.address.building" readonly></md-input>
-                            </md-field>
-                            <md-field>
-                                <label>Coordonnées</label>
-                                <md-input v-model="actualRestaurant.address.coord[0]" readonly></md-input>
-                                <md-input v-model="actualRestaurant.address.coord[1]" readonly></md-input>
-                            </md-field>
-                            <md-field>         
-                                <label>ZipCode:</label>
-                                <md-input v-model="actualRestaurant.address.zipcode" readonly></md-input>
-                            </md-field>
-                        </span>
-                        <span class="tableSetValuesRest"> 
-                            <div class="map-google">
-                                <GmapMap
-                                    :center="{lat:latitude, lng:longitude}"
-                                    :zoom="16"
-                                    map-type-id="terrain"
-                                    style="width: 400px; height: 300px"
-                                >
-                                </GmapMap>
-                            </div>
-                        </span>
-                    </template>                    
+                    <span class="tableSetValuesRest"> 
+                        <div class="map-google">
+                            <GmapMap
+                                :center="{lat:latitude, lng:longitude}"
+                                :zoom="16"
+                                map-type-id="terrain"
+                                style="width: 400px; height: 300px"
+                            >
+                            </GmapMap>
+                        </div>
+                    </span>
+                </template>                    
             </md-tab>
 
             <template v-if="actualRestaurant.grades != undefined">
@@ -60,9 +60,15 @@
                     <h1>Grades</h1>
                     <md-table v-model="actualRestaurant.grades" md-fixed-header>
                         <md-table-row slot="md-table-row" slot-scope="{item}" md-selectable="single">
-                            <md-table-cell md-label="Date">{{item.date}}</md-table-cell>
-                            <md-table-cell md-label="Grade">{{item.grade}}</md-table-cell>
-                            <md-table-cell md-label="Score">{{item.score}}</md-table-cell>
+                            <template v-if="actualRestaurant.grades.date != undefined">
+                                <md-table-cell md-label="Date">{{item.date}}</md-table-cell>
+                            </template>
+                            <template v-if="actualRestaurant.grades.grade != undefined">
+                                <md-table-cell md-label="Grade">{{item.grade}}</md-table-cell>
+                            </template>
+                            <template v-if="actualRestaurant.grades.score != undefined">
+                                <md-table-cell md-label="Score">{{item.score}}</md-table-cell>
+                            </template>
                         </md-table-row>
                     </md-table>                 
                 </md-tab>
@@ -156,10 +162,16 @@ export default {
 
     methods : {
         displayDialogDataRestaurant (restaurant) {
+            //console.trace ();
             this.actualRestaurant = restaurant;
-            this.latitude = this.actualRestaurant.address.coord[1],
-            this.longitude = this.actualRestaurant.address.coord[0],
+            if (restaurant.address != undefined) {
+                this.latitude = this.actualRestaurant.address.coord[1];
+                this.longitude = this.actualRestaurant.address.coord[0];
+            }
             this.showDialogDataRestaurant = !this.showDialogDataRestaurant;
+        },
+        closeDialogRestaurant () {
+            this.showDialogDataRestaurant = false;
         },
         modifiedRestaurant (event) {
             console.log("modified - FenetreInformationRestaurant");

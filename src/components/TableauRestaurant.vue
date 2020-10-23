@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='main'>
         <!-- DEBUT zone de dialogue pour les données d'un restaurant -->
         <FenetreInformationRestaurant :restaurant="{restaurant: actualRestaurant}" ref="fenInfRest"/>
         <!-- DEBUT ajout d'un nouveau Restaurant -->
@@ -22,13 +22,20 @@
         </md-dialog>
         <!-- FIN ajout d'un nouveau Restaurant -->
 
-        <md-app>
+        <md-app class='main'>
         <md-app-toolbar class="md-primary">
-            <span class="md-title">Vos Meilleurs Restaurants ({{restaurants.length}}):</span>
+            <span class="md-title">Vos Meilleurs Restaurants :</span>
             <md-button class="md-raised buttonAlignRight" @click="showDialogAddRestaurant = true">Ajouter Restaurant</md-button>
         </md-app-toolbar>
 
         <md-app-drawer md-permanent="clipped">
+            <md-content>
+                <md-field>
+                    <md-input v-model="messCountRestaurants" readonly></md-input>
+                </md-field><md-field>
+                    <md-input v-model="messNbPages" readonly></md-input>
+                </md-field>
+            </md-content>
             <md-toolbar class="md-transparent parameters" md-elevation="0">
                 <div class="md-title">Paramètres de Recherche</div>
             </md-toolbar>
@@ -52,12 +59,19 @@
             </md-app-drawer>
 
             <md-app-content>
-                <md-table v-model="restaurants" md-sort="name" md-sort-order="asc" md-card md-fixed-header @md-selected="onSelect">
-                    <md-table-row slot="md-table-row" slot-scope="{item}" md-selectable="single">
-                        <md-table-cell md-label="Name" md-sort-by="name">{{item.name}}</md-table-cell>
-                        <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{item.cuisine}}</md-table-cell>
-                    </md-table-row>
-                </md-table>
+                <template v-if="restaurants.length > 0">
+                    <md-table v-model="restaurants" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect">
+                        <md-table-row slot="md-table-row" slot-scope="{item}" md-selectable="single">
+                            <md-table-cell md-label="Name" md-sort-by="name">{{item.name}}</md-table-cell>
+                            <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{item.cuisine}}</md-table-cell>
+                        </md-table-row>
+                    </md-table>
+                </template>
+                <template v-else>
+                    <md-field>
+                        <md-input v-model="messageMissRestaurant" readonly></md-input>
+                    </md-field>                 
+                </template>
             </md-app-content>
         </md-app>
     </div>
@@ -66,6 +80,7 @@
 
 <script>
 import FenetreInformationRestaurant from './FenetreInformationRestaurant.vue';
+import _ from "lodash";
 
 export default {
     name: 'TableauRestaurant', 
@@ -73,11 +88,15 @@ export default {
         FenetreInformationRestaurant
     },
     data: () => ({
+            messageMissRestaurant: "Aucun restaurant ne correspond à vos critères de recherche...",
             precDisabled: true,
             restaurants: [],
+            countRestaurants: 0,
+            messCountRestaurants: "",
+            messNbPages: "",
             nom: '',
             cuisine: '',
-            nbRestaurants: 5,
+            nbRestaurants: 13,
             page: 1,
             keywordRestaurant: '',
             lastTimeScroll: 0,
@@ -92,10 +111,12 @@ export default {
     ),
     methods: {
         onSelect (item) {
-            if (item != null) {
-                this.actualRestaurant = item;
+            if (item != undefined) {
+                if (item != null) {
+                    this.actualRestaurant = item;
+                }
+                this.$refs.fenInfRest.displayDialogDataRestaurant (this.actualRestaurant);
             }
-            this.$refs.fenInfRest.displayDialogDataRestaurant (this.actualRestaurant);
         },
         getRestaurantFromServer () {
             let url = "http://127.0.0.1:8080/api/restaurants?pagesize=" + this.nbRestaurants;
@@ -107,17 +128,31 @@ export default {
                 })
                 .then ((response) => {
                     this.restaurants = response.data;
-                    this.showDialogDataRestaurant = false;
+                    this.countRestaurants = response.count;
+                    this.messCountRestaurants = this.countRestaurants + " restaurants trouvés";
+
+                    let c = this.countRestaurants / this.nbRestaurants;
+                    if ((c | 0) < c) {
+                        c = (c | 0) + 1;
+                    }
+                    this.messNbPages = this.page + " / " + c;
+
+                    this.$refs.fenInfRest.closeDialogRestaurant ();
                     this.showDialogAddRestaurant = false;
                 });
         },
         supprimerRestaurant(event) {
             event.preventDefault ();
+            if (this.actualRestaurant._id != undefined) {
             fetch ("http://127.0.0.1:8080/api/restaurants/" + this.actualRestaurant._id, {
                 method: "DELETE"
             }).then (() => {
                 this.getRestaurantFromServer ();
             });
+            }
+            else {
+                alert ("Ce restaurant n'existe pas encore dans la base de donnée, veuillez attendre quelques secondes");
+            }
         },
         deleteRestaurant (resto) {
             fetch ("http://127.0.0.1:8080/api/restaurants/" + resto._id, {
@@ -159,6 +194,7 @@ export default {
                     cuisine: this.cuisine
                 })
             }).then (() => {
+                this.getRestaurantFromServer ();
             });
 
             this.nom = "";
@@ -170,18 +206,19 @@ export default {
         sliderChange (event) {
             this.lastTimeScroll = event.timeStamp;
         },
-        sliderCharge () {
+        sliderCharge: _.debouce (() => {
+            this.$refs.fenInfRest.closeDialogRestaurant ();
             this.getRestaurantFromServer ();
-        },
-        textChange (inputText) {
+        }, 300),
+        textChange : _.debouce((inputText) => {
             this.keywordRestaurant = inputText;
-            this.getRestaurantFromServer ();
-        },
+            this.$refs.fenInfRest.closeDialogRestaurant ();
+            this.getRestaurantFromServer ();            
+        }, 300),
         increasePage () {
             this.page++;
-            //this.$refs.buttonPrecedant.disabled = false;
             this.precDisabled = false;
-
+            this.$refs.fenInfRest.closeDialogRestaurant ();
             this.getRestaurantFromServer ();
         },
         decreasePage () {
@@ -191,7 +228,7 @@ export default {
                 //this.$refs.buttonPrecedant.disabled = true;
                 this.precDisabled = true;
             }
-
+            this.$refs.fenInfRest.closeDialogRestaurant ();
             this.getRestaurantFromServer ();
         }
     },
@@ -208,6 +245,14 @@ export default {
 </script>
 
 <style scoped>
+    div.main {
+        height: 100vh;
+    }
+
+    .md-table {
+        height: 87vh;
+        max-height: 87vh;
+    }
 
     .buttonAlignRight {
         right: 1em;
@@ -256,10 +301,6 @@ export default {
         padding: 0.5em;
         margin: 0.5em;
         border: solid thin rgba(0, 0, 0, 0.15);
-    }
-
-    .fullscreen {
-        min-height: calc(100% + 1px);
     }
 
     .listbrd {
