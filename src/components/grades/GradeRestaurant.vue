@@ -1,58 +1,60 @@
 <template>
     <div>
         <form novalidate class="md-layout" @submit.prevent="validateUser">
-            <md-card class="md-layout-item md-size-50 md-small-size-100">
+            <md-card class="md-layout-item">
                 <md-card-header>
-                <div class="md-title">Users</div>
+                <div class="md-title">Ajouter une note</div>
                 </md-card-header>
 
                 <md-card-content>
                 <div class="md-layout md-gutter">
                     <div class="md-layout-item md-small-size-100">
+
+                        <!-- LE GRADE -->
                     <md-field :class="getValidationClass('grade')">
-                        <label for="first-name">Grade</label>
+                        <label>Grade</label>
                         <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.grade" :disabled="sending" />
-                        <span class="md-error" v-if="!$v.form.grade.required">The first name is required</span>
-                        <span class="md-error" v-else-if="!$v.form.grade.minlength">Invalid first name</span>
+                        <span class="md-error" v-if="!$v.form.grade.required">Le grade doit être saisie !</span>
+                        <span class="md-error" v-else-if="!$v.form.grade.minLength">Le grade ne doit comporter un seul caractère !</span>
+                        <span class="md-error" v-else-if="!$v.form.grade.maxLength">Le grade ne doit comporter un seul caractère !</span>
+                        <span class="md-error" v-else-if="!$v.form.grade.alpha">Le grade est une lettre !</span>
                     </md-field>
                     </div>
 
+                        <!-- LE SCORE -->
                     <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('lastName')">
-                        <label for="last-name">Last Name</label>
-                        <md-input name="last-name" id="last-name" autocomplete="family-name" v-model="form.lastName" :disabled="sending" />
-                        <span class="md-error" v-if="!$v.form.lastName.required">The last name is required</span>
-                        <span class="md-error" v-else-if="!$v.form.lastName.minlength">Invalid last name</span>
+                    <md-field :class="getValidationClass('score')">
+                        <label>Score</label>
+                        <md-input name="score" type="number" v-model="form.score" :disabled="sending" />
+                        <span class="md-error" v-if="!$v.form.score.required">Le score doit être saisie !</span>
+                        <span class="md-error" v-else-if="!$v.form.score.between">Le score est compris entre 1 et 12 !</span>
                     </md-field>
                     </div>
                 </div>
 
+                        <!-- LA DATE -->
                 <md-field :class="getValidationClass('date')">
                     <label>Date</label>
                     <md-datepicker v-model="form.date" name="date" id="date" :disabled="sending"/>
-                    <span class="md-error" v-if="!$v.form.date.required">The date is required</span>
+                    <span class="md-error" v-if="!$v.form.date.required">La date de la note doit être saisie</span>
                 </md-field>
                 </md-card-content>
 
                 <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
                 <md-card-actions>
-                <md-button type="submit" class="md-primary" :disabled="sending">Create user</md-button>
+                <md-button type="submit" class="md-primary" :disabled="sending">Ajouter note</md-button>
                 </md-card-actions>
             </md-card>
-
-            <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
         </form>
     </div>
 </template>
 
 <script>
 import { validationMixin } from 'vuelidate'
-import {
-    required,
-    minLength,
-    maxLength
-    } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, between, alpha } from 'vuelidate/lib/validators'
+// import parse from 'date-fns/parse'
+import format from 'date-fns/format'
 
 export default {
     name: "GradeRestaurant",
@@ -61,7 +63,7 @@ export default {
     data: () => ({
         form: {
             grade: null,
-            lastName: null,
+            score: null,
             date: null,
         },
         userSaved: false,
@@ -70,20 +72,15 @@ export default {
     }),
     validations: {
         form: {
-            firstName: {
+            grade: {
                 required,
-                minLength: minLength(3)
+                minLength: minLength(1),
+                maxLength: maxLength(1),
+                alpha
             },
-            lastName: {
+            score: {
                 required,
-                minLength: minLength(3)
-            },
-            age: {
-                required,
-                maxLength: maxLength(3)
-            },
-            gender: {
-                required
+                between: between(1, 12)
             },
             date: {
                 required
@@ -91,8 +88,8 @@ export default {
         }
     },
     methods: {
-      getValidationClass (fieldName) {
-        const field = this.$v.form[fieldName]
+        getValidationClass (fieldName) {
+            const field = this.$v.form[fieldName]
 
             if (field) {
                 return {
@@ -102,33 +99,26 @@ export default {
         },
         clearForm () {
             this.$v.$reset()
-            this.form.firstName = null
-            this.form.lastName = null
-            this.form.age = null
-            this.form.gender = null
+            this.form.grade = null
+            this.form.score = null
             this.form.date = null
         },
-        saveUser () {
-        this.sending = true
-
-        // Instead of this timeout, here you can call your API
-        window.setTimeout(() => {
-                this.lastUser = `${this.form.firstName} ${this.form.lastName}`
-                this.userSaved = true
-                this.sending = false
-                this.clearForm()
-            }, 1500)
-            },
-            validateUser () {
-            this.$v.$touch()
-
-            if (!this.$v.$invalid) {
-                this.saveUser()
+        validateUser () {
+            this.$v.form["grade"].$touch ();
+            this.$v.form["score"].$touch ();
+            this.$v.form["date"].$touch ();
+            
+            if (!this.$v.form.$invalid) {
+                // à remplacer par un $emit 
+                this.$parent.$parent.$parent.$parent.addGrade ({
+                    date: format(this.form.date, 'yyyy-MM-dd') + "T" + format(this.form.date, 'HH:mm:ss.SSS') + "Z",
+                    grade: this.form.grade.toUpperCase (),
+                    score: parseInt(this.form.score)
+                });
             }
-        }
+         }
     }
 }
-
 </script>
 
 <style scoped>

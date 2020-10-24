@@ -3,6 +3,8 @@ import App from './App.vue';
 
 import VueRouter from 'vue-router';
 
+import 'leaflet/dist/leaflet.css';
+
 import TableauRestaurant from './components/TableauRestaurant.vue';
 import RestaurantDetail from './components/RestaurantDetail.vue';
 import NewRestaurant from './components/NewRestaurant.vue';

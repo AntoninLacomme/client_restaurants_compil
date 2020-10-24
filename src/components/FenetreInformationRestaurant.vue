@@ -159,7 +159,6 @@ export default {
         markers: []
 
     }),
-
     methods : {
         displayDialogDataRestaurant (restaurant) {
             //console.trace ();
