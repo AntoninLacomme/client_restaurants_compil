@@ -1,31 +1,11 @@
 <template>
     <div class='main'>
-        <!-- DEBUT zone de dialogue pour les données d'un restaurant -->
         <FenetreInformationRestaurant :restaurant="{restaurant: actualRestaurant}" ref="fenInfRest"/>
-        <!-- DEBUT ajout d'un nouveau Restaurant -->
-        <!-- <md-dialog :md-active.sync="showDialogAddRestaurant">
-            <md-dialog-title>Ajouter un nouveau Restaurant</md-dialog-title>
-                <form v-on:submit="ajouterRestaurant" class="padd1em">
-                    <md-field>
-                        <label>Nom du Restaurant</label>
-                        <md-input v-model="nom"></md-input>
-                    </md-field>
-                    <md-field>
-                        <label>Type de Cuisine</label>
-                        <md-input v-model="cuisine"></md-input>
-                    </md-field>
-                    <md-button type="submit" class="md-raised">Ajouter ce Restaurant</md-button>
-                </form>
-            <md-dialog-actions>
-                <md-button class="md-primary" @click="showDialogAddRestaurant = false">Close</md-button>
-            </md-dialog-actions>
-        </md-dialog> -->
-        <!-- FIN ajout d'un nouveau Restaurant -->
+        <Redirection />
 
         <md-app class='main'>
         <md-app-toolbar class="md-primary">
             <span class="md-title">Vos Meilleurs Restaurants :</span>
-            <md-button class="md-raised buttonAlignRight" @click="showDialogAddRestaurant = true">Ajouter Restaurant</md-button>
         </md-app-toolbar>
 
         <md-app-drawer md-permanent="clipped">
@@ -96,12 +76,14 @@ Vue.use(VueGoogleMaps, {
 
 
 import FenetreInformationRestaurant from './FenetreInformationRestaurant.vue';
+import Redirection from './Redirection';
 import _ from "lodash";
 
 export default {
     name: 'TableauRestaurant', 
     components : {
-        FenetreInformationRestaurant
+        FenetreInformationRestaurant,
+        Redirection
     },
     data: () => ({
             messageMissRestaurant: "Aucun restaurant ne correspond à vos critères de recherche...",
@@ -119,8 +101,7 @@ export default {
                 name: "",
                 cuisine: ""
             },
-            showDialogDataRestaurant: false,
-            showDialogAddRestaurant: false
+            showDialogDataRestaurant: false
         }
     ),
     methods: {

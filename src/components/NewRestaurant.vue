@@ -3,6 +3,7 @@
         <!-- cette balise md-app permet de remonter le body, qui autrement est trop bas d'une vingtaine de pixels -->
         <md-app>            
         </md-app>
+        <Redirection />
 
         <form novalidate v-on:submit="ajouterRestaurant">
             <md-steppers :md-active-step.sync="active" md-linear>
@@ -123,6 +124,7 @@
     import { validationMixin } from 'vuelidate'
     import { required, minLength, maxLength, between } from 'vuelidate/lib/validators'
     import GradeRestaurant from './grades/GradeRestaurant.vue'
+    import Redirection from './Redirection.vue'
 
     import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
     import L from "leaflet";
@@ -138,6 +140,7 @@
         mixins: [validationMixin],
         components: {
             GradeRestaurant,
+            Redirection,
             LMap,
             LTileLayer,
             LMarker
@@ -209,6 +212,7 @@
         methods : {
             clickUpdate (event) {
                 this.currentCenter = event.latlng;
+                console.log(this.currentCenter);
                 this.form.latitude = this.currentCenter.lat;
                 this.form.longitude = this.currentCenter.lng;
             },

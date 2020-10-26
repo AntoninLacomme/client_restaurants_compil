@@ -51,6 +51,17 @@
                             >
                             </GmapMap>
                         </div>
+                        <!-- <l-map
+                            :zoom="zoom"
+                            :center="center"
+                            style="height: 500px; width: 100%"
+                        >
+                            <l-tile-layer
+                                :url="url"
+                                :attribution="attribution"
+                            />
+                            <l-marker :lat-lng="currentCenter"></l-marker>
+                        </l-map> -->
                     </span>
                 </template>                    
             </md-tab>
@@ -58,59 +69,15 @@
             <template v-if="actualRestaurant.grades != undefined">
                  <md-tab md-label="Grades">
                     <h1>Grades</h1>
-                    <md-table v-model="actualRestaurant.grades" md-fixed-header>
+                    <md-table v-model="grades" md-fixed-header>
                         <md-table-row slot="md-table-row" slot-scope="{item}" md-selectable="single">
-                            <template v-if="actualRestaurant.grades.date != undefined">
-                                <md-table-cell md-label="Date">{{item.date}}</md-table-cell>
-                            </template>
-                            <template v-if="actualRestaurant.grades.grade != undefined">
-                                <md-table-cell md-label="Grade">{{item.grade}}</md-table-cell>
-                            </template>
-                            <template v-if="actualRestaurant.grades.score != undefined">
-                                <md-table-cell md-label="Score">{{item.score}}</md-table-cell>
-                            </template>
+                            <md-table-cell md-label="Date">{{item.date}}</md-table-cell>
+                            <md-table-cell md-label="Grade">{{item.grade}}</md-table-cell>
+                            <md-table-cell md-label="Score">{{item.score}}</md-table-cell>
                         </md-table-row>
                     </md-table>                 
                 </md-tab>
             </template>
-           
-
-
-            <md-tab md-label="Modification des données">
-                <form @submit.prevent="modifiedRestaurant">
-                    <md-field>
-                        <label>Nom du Restaurant</label>
-                        <md-input name="nom" v-model="actualRestaurant.name"></md-input>
-                    </md-field>
-                    <md-field>
-                        <label>Type de Cuisine</label>
-                        <md-input name="cuisine" v-model="actualRestaurant.cuisine"></md-input>
-                    </md-field>
-                    <md-button type="submit" class="md-raised">Valider Modification</md-button>
-                </form>
-            </md-tab>
-
-            <md-tab md-label="Ajouter un Grade">
-                <p>Ajouter un nouveau grade à ce restaurant</p>
-                <form>
-                    <md-datepicker v-model="selectedDate">
-                        <label>Date de test</label>
-                    </md-datepicker>
-
-                    <md-field>
-                        <label>Grade</label>
-                        <md-select v-model="gradeLabel" name="grade">
-                            <md-option value="A">A</md-option>
-                            <md-option value="B">B</md-option>
-                            <md-option value="C">C</md-option>
-                            <md-option value="D">D</md-option>
-                            <md-option value="E">E</md-option>
-                            <md-option value="F">F</md-option>
-                            <md-option value="G">G</md-option>
-                        </md-select>
-                    </md-field>
-                </form>
-            </md-tab>
 
             <md-tab md-label="Supprimer le Restaurant">
                 <p>Voulez vous vraiment supprimer définitevement ce restaurant ?</p>
@@ -135,8 +102,23 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 Vue.use(VueMaterial)
 
+/*
+import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+import L from "leaflet";
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+});*/
+
 export default {
     name: "FenetreInformationRestaurant",
+    components: {
+        // LMap,
+        // LTileLayer,
+        // LMarker
+    },
     props: {
         restaurant: Object
     },
@@ -147,22 +129,29 @@ export default {
             _id: "",
             name: "",
             cuisine: "",
-            address: {coord: [0, 0]},
-            grades: undefined
+            address: {coord: [40.71, -74]},
+            grades: []
         },
+        grades: [],
         gradeLabel: "A",
-
-        latitude: 0,
-        longitude: 0,
+        latitude: -74,
+        longitude: 40.71,
         hmdtabs: 500,
 
         markers: []
-
+        // currentCenter: L.latLng (40.71, -74),
+        // zoom: 13,
+        // center: [40.71, -74],
+        // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }),
     methods : {
         displayDialogDataRestaurant (restaurant) {
             //console.trace ();
             this.actualRestaurant = restaurant;
+            this.grades = this.actualRestaurant.grades;
+            console.log(this.grades);
+          // this.currentCenter = L.latLng (this.actualRestaurant.address.coord[1], this.actualRestaurant.address.coord[0]);
             if (restaurant.address != undefined) {
                 this.latitude = this.actualRestaurant.address.coord[1];
                 this.longitude = this.actualRestaurant.address.coord[0];
@@ -183,6 +172,9 @@ export default {
         searchOnGoogleMap (event) {
             console.log(event);
         }
+    },
+    mounted: function () {
+       
     }
 }
 </script>
@@ -194,7 +186,7 @@ export default {
 
     .tableSetValuesRest {
         display: inline-block;
-        padding: 0.5em;
+        padding: 0.2em;
         margin: 0.5em;
         max-width: calc(33% -1em);
         max-height: 600px;
