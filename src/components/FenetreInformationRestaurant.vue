@@ -18,7 +18,15 @@
                 </span>
                 <template v-if="actualRestaurant.address != undefined">  
                     <span class="tableSetValuesRest">                        
-                        <h1>Adresse<span class="search-map" @click="searchOnGoogleMap"><md-icon>search</md-icon></span></h1>
+                        <h1>Adresse
+                            <router-link :to=linkedid>
+                                <span class="search-map">
+                                    <md-icon>search</md-icon>
+                                </span>
+                            </router-link>
+
+                            <router-view></router-view>
+                        </h1>
                         <md-field>
                             <label>Quartier :</label>
                             <md-input v-model="actualRestaurant.borough" readonly></md-input>
@@ -132,6 +140,7 @@ export default {
             address: {coord: [40.71, -74]},
             grades: []
         },
+        linkedid: "/DetailRestaurant?id=",
         grades: [],
         gradeLabel: "A",
         latitude: -74,
@@ -150,6 +159,8 @@ export default {
             //console.trace ();
             this.actualRestaurant = restaurant;
             this.grades = this.actualRestaurant.grades;
+            this.linkedid = "/DetailRestaurant?id=" + this.actualRestaurant._id,
+            console.log(this.linkid);
             console.log(this.grades);
           // this.currentCenter = L.latLng (this.actualRestaurant.address.coord[1], this.actualRestaurant.address.coord[0]);
             if (restaurant.address != undefined) {
@@ -168,9 +179,6 @@ export default {
         supprimerRestaurant (event) {
             event.preventDefault ();
             this.$parent.deleteRestaurant (this.actualRestaurant);
-        },
-        searchOnGoogleMap (event) {
-            console.log(event);
         }
     },
     mounted: function () {

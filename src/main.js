@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import TableauRestaurant from './components/TableauRestaurant.vue';
 import RestaurantDetail from './components/RestaurantDetail.vue';
 import NewRestaurant from './components/NewRestaurant.vue';
+import DetailRestaurant from './components/DetailRestaurant.vue';
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
@@ -25,10 +26,14 @@ const router = new VueRouter ({
       {
         path: '/NewRestaurant',
         component: NewRestaurant
+      },
+      {
+        path: '/DetailRestaurant',
+        component: DetailRestaurant
       }
     ],
     mode: 'history'
-})
+});
 
 new Vue({
   router,

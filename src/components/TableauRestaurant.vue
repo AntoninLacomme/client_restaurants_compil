@@ -40,7 +40,7 @@
 
             <md-app-content>
                 <template v-if="restaurants.length > 0">
-                    <md-table v-model="restaurants" md-sort="name" md-sort-order="asc" md-card  >
+                    <md-table v-model="restaurants" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect" >
                         <md-table-row slot="md-table-row" slot-scope="{item}" md-selectable="single">
                             <md-table-cell md-label="Name" md-sort-by="name">{{item.name}}</md-table-cell>
                             <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{item.cuisine}}</md-table-cell>
