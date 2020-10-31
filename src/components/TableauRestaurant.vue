@@ -124,6 +124,7 @@ export default {
                     return response.json();
                 })
                 .then ((response) => {
+                    console.log(response);
                     this.restaurants = response.data;
                     this.countRestaurants = response.count;
                     this.messCountRestaurants = this.countRestaurants + " restaurants trouvés";
