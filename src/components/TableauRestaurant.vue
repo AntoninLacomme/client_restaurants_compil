@@ -119,6 +119,7 @@ export default {
             let url = "http://127.0.0.1:8080/api/restaurants?pagesize=" + this.nbRestaurants;
             url += "&page=" + this.page;
             url += "&name=" + this.keywordRestaurant;
+            console.log(this.keywordRestaurant);
             fetch (url)
                 .then ((response) => {
                     return response.json();

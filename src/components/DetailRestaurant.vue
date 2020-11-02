@@ -12,6 +12,13 @@
                             <label>Type de cuisine du restaurant</label>
                             <md-input readonly v-model="restaurant.cuisine"/>
                         </md-field>
+
+                        <md-table v-model="restaurant.menu" md-card>
+                            <md-table-row slot="md-table-row" slot-scope="{item}">
+                                <md-table-cell md-label="Plat">{{item.plat}}</md-table-cell>
+                                <md-table-cell md-label="Prix">{{item.price}}.00 €</md-table-cell>
+                            </md-table-row>
+                        </md-table>
                 </md-tab>
                 <md-tab md-label="Localisation">
                         <md-field>
@@ -79,6 +86,8 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require("leaflet/dist/images/marker-shadow.png")
 });
 
+import {Menu} from '../assets/classes/Menu.js'
+
 export default {
     name: "DetailRestaurant",
     components: {
@@ -99,7 +108,8 @@ export default {
             borough: '',
             cuisine: '',
             grades: [],
-            name: ''
+            name: '',
+            menu: []
         },
         zoom: 14,
         center: [40.71, -74],
@@ -125,6 +135,8 @@ export default {
                     this.restaurant = data.restaurant;
                     this.center = [this.restaurant.address.coord[1],this.restaurant.address.coord[0]];
                     this.currentCenter = L.latLng(this.restaurant.address.coord[1],this.restaurant.address.coord[0]);
+
+                    this.restaurant["menu"] = new Menu ().generateMenu (this.restaurant.cuisine);
                 });
         }
     },
