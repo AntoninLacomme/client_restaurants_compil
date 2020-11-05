@@ -87,6 +87,7 @@ L.Icon.Default.mergeOptions({
 });
 
 import {Menu} from '../assets/classes/Menu.js'
+import {CarteDesPlats} from '../assets/classes/CarteDesPlats.js'
 
 export default {
     name: "DetailRestaurant",
@@ -136,7 +137,7 @@ export default {
                     this.center = [this.restaurant.address.coord[1],this.restaurant.address.coord[0]];
                     this.currentCenter = L.latLng(this.restaurant.address.coord[1],this.restaurant.address.coord[0]);
 
-                    this.restaurant["menu"] = new Menu ().generateMenu (this.restaurant.cuisine);
+                    this.restaurant["menu"] = new Menu (new CarteDesPlats ()).generateMenu (this.restaurant.cuisine);
                 });
         }
     },
