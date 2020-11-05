@@ -137,6 +137,7 @@ export default {
                     this.center = [this.restaurant.address.coord[1],this.restaurant.address.coord[0]];
                     this.currentCenter = L.latLng(this.restaurant.address.coord[1],this.restaurant.address.coord[0]);
 
+                    console.log("APPEL GENERATE MENU");
                     this.restaurant["menu"] = new Menu (new CarteDesPlats ()).generateMenu (this.restaurant.cuisine);
                 });
         }

@@ -1,6 +1,10 @@
 
 export class CarteDesPlats {
-    platsPrincipaux () {
+    nomsCartes (index) {
+        if (index < 0 && index >= 6) { return "Menu impossible"; }
+        return ["Menu Principal", "Menu du Jour", "Menu enfant", "Menu Junior", "Menu Regionnal", "Menu Quartier"][index];
+    }
+    platsPrincipaux (cuisine) {
         // nota bene :
         // cette liste est juste une gigantesque blague, viendez pas dire 'oui mé sa c pa 2 tel pays é sa c pas pareil ke sa'
         return {
@@ -607,10 +611,10 @@ export class CarteDesPlats {
                     description: "Tous les secrets intimes de personnes que vous ne rencontrerez jamais et que vous n'auriez jamais connu sans nous"
                 },
             }
-        }
+        }[cuisine];
     }
 
-    accompagnements () {
+    accompagnements (cuisine) {
         return {
             Hamburgers: {
                 "Salade Verte": 1,
@@ -665,10 +669,10 @@ export class CarteDesPlats {
             },
             "Soul Foud": {
             }
-        }
+        }[cuisine];
     }
 
-    entrees () {
+    entrees (cuisine) {
         return {
             Hamburgers: {
             },
@@ -718,10 +722,10 @@ export class CarteDesPlats {
             },
             "Soul Foud": {
             }
-        }
+        }[cuisine];
     }
 
-    desserts () {
+    desserts (cuisine) {
         return {
             Hamburgers: {
             },
@@ -771,6 +775,20 @@ export class CarteDesPlats {
             },
             "Soul Foud": {
             }
+        }[cuisine];
+    }
+
+    hasCuisineMenu () {
+        return {
+            Hamburgers: true, American: true, Chicken: true, Chinese: true, Japanese: true, Italian: true, "Pizza/Italian": true,
+            Steak: true, French: true, Delicatessen: true, "Ice Cream, Gelato, Yogurt, Ices": false, Donuts: false, Spanish: true,
+            German: true, SeaFood: true, Irish: true, African: true, Indian: true, Mexican: true,
+            "Latin (Cuban, Dominican, Puerto Rican, South & Central American)": true, HotDogs: false, "Jewish/Kosher": true,
+            "Café/Coffee/Tea": false, "Tex-Mex": true, "Pancakes/Waffles": false, "Soul Foud": true
         }
+    }
+
+    hasMenu (cuisine) {
+        return this.hasCuisineMenu()[cuisine];
     }
 }
