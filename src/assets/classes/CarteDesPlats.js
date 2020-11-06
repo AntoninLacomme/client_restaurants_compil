@@ -762,41 +762,81 @@ export class CarteDesPlats {
     desserts (cuisine) {
         return {
             Hamburgers: {
-                "Apple Dumpling Cobbler": [3]
+                "Apple Dumpling Cobbler": [8],
+                "Cheesecake": [8],
+                "Pancake Myrtille": [8],
+                "Donuts": [4],
+                "Cookies": [4],
+                "Muffins": [4]
             },
-            American: {
-            },
-            Chicken: {
-            },
+            American: "Hamburgers",
+            Chicken: "Hamburgers",
             Chinese: {
+                "Boule de coco chinoise": [5],
+                "Flan à la fleur de rose": [5],
+                "Baignet de banane": [5],
+                "Sorbet aux litchis": [5],
+                "Riz gluant au lait de coco et à la mangue": [5]
             },
             Japanese: "Chinese",
             Italian: {
+                "Pettole": [3],
+                "Zaletti": [3],
+                "Castagnaccio": [5],
+                "Sbrisolona": [5],
+                "Pastiera napolitaine": [5]
             },
             "Pizza/Italian": "Italian",
-            Steak: {
-            },
+            Steak: "Hamburgers",
             French: {
+                "Baba au Rhum": [5],
+                "Paris-Brest": [5],
+                "Ile flottante": [5],
+                "Mille-Feuille": [5],
+                "Fondant au chocolat": [5],
+                "Crême Brulée": [5],
+                "Tarte Tatin": [5],
+                "Mousse au chocolat": [5]
             },
-            Delicatessen: {
-            },
+            Delicatessen: "Hamburgers",
             "Ice Cream, Gelato, Yogurt, Ices": {
             },
             Donuts: {
             },
             Spanish: {
+                "Churros": [5],
+                "Tarta de Santiago": [5],
+                "Tarta de queso": [5],
+                "Crême catalane": [5]
             },
             German: {
+                "Forêt Noire": [5],
+                "Sablé Viennois": [5],
+                "Chinois à la crême de noisette": [5],
+                "Strüdel tresse pomme-poire": [5],
+                "Stollen": [5],
+                "Rote Grütze": [5]
             },
-            SeaFood: {
-            },
-            Irish: {
-            },
+            SeaFood: "Hamburgers",
+            Irish: "Hambrugers",
             African: {
+                "Tarte au Lait": [5],
+                "Biscuit bantou": [5],
+                "Kaak": [5],
+                "Beignets blofoto": [5]
             },
             Indian: {
+                "Gulab Jamun": [5],
+                "Khir": [5],
+                "Ladoo": [5],
+                "Kulfi": [5]
             },
             Mexican: {
+                "Churros": [5],
+                "Cocada": [5],
+                "Tamales": [5],
+                "Pan de Elote": [5],
+                "Camotes": [5]
             },
             "Latin (Cuban, Dominican, Puerto Rican, South & Central American)": "Mexican",
             HotDogs: {
