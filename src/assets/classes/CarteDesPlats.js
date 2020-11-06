@@ -675,40 +675,74 @@ export class CarteDesPlats {
     entrees (cuisine) {
         return {
             Hamburgers: {
+                "Salade Verte": [2],
+                "Salade de Tomate": [2],
+                "Salade Oeufs Crudité": [3],
+                "Assortiment de Crudités": [3],
+                "Tartines": [3]
             },
-            American: {
-            },
-            Chicken: {
-            },
+            American: "Hamburgers",
+            Chicken: "Hamburgers",
             Chinese: {
+                "Mini rouleaux de printemps": [5],
+                "Rouleau de printemps au tourteau": [5],
+                "Soupe de raviolis aux crevette": [5],
+                "Brochettes de crevette": [5],
+                "Samoussas de crevette": [5],
+                "Nems aux crevette": [5]
             },
             Japanese: "Chinese",
             Italian: {
+                "Carpaccio au pesto": [5],
+                "Asperges milanaises": [5],
+                "Calzone aux tomates": [3],
+                "Salade de Melon": [5],
+                "Carpaccio aux carpes": [5]
             },
             "Pizza/Italian": "Italian",
-            Steak: {
-            },
+            Steak: "Hamburgers",
             French: {
+                "Mini Paté en croute": [5],
+                "Oeuf Mayonnaise": [3],
+                "Asperges grillées": [5],
+                "Terrine paysane": [5],
+                "Velouté de châteigne": [5],
+                "Tempura provencales": [5],
+                "Ouef à la coque et mouillettes": [3]
             },
-            Delicatessen: {
-            },
+            Delicatessen: "Hamburgers",
             "Ice Cream, Gelato, Yogurt, Ices": {
             },
             Donuts: {
             },
             Spanish: {
+                "Gaspacho glacé": [5],
+                "Sardines catalanes": [5],
+                "Croustades de la mer andalouse": [5],
+                "Petit sandwitch ibérique": [5],
+                "Cornets de Jambon": [5]
             },
             German: {
+                "Soupe de pomme de Terre": [3],
+                "Brioche Allemande": [3],
+                "Soupe paysanne": [3],
+                "Saumon mariné": [3]
             },
-            SeaFood: {
-            },
-            Irish: {
-            },
-            African: {
-            },
+            SeaFood: "Hambrugers",
+            Irish: "Hamburgers",
+            African: "Hamburgers",
             Indian: {
+                "Salade Epinard / Pois Chiche": [3],
+                "Soupe froide de concombre": [3],
+                "Brochettes de rognons": [3],
+                "Soupe indienne glacée": [3]
             },
             Mexican: {
+                "Trempette aux crevette": [5],
+                "Salade Mexicaine": [5],
+                "Mesclun au guacamole": [5],
+                "Purée de tomate Mexicaine": [3],
+                "Enchiladas": [5]
             },
             "Latin (Cuban, Dominican, Puerto Rican, South & Central American)": "Mexican",
             HotDogs: {
@@ -728,6 +762,7 @@ export class CarteDesPlats {
     desserts (cuisine) {
         return {
             Hamburgers: {
+                "Apple Dumpling Cobbler": [3]
             },
             American: {
             },

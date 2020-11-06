@@ -23,6 +23,8 @@ export class Menu {
             let accompagnements = this.carte.accompagnements(cuisine);
             let desserts = this.carte.desserts(cuisine);
 
+            console.log(entrees, plats, accompagnements, desserts);
+
             // un menu, kess ke c ?
             // une entrée, un plat et un dessert
             // pour faire bonne figure, il faudrait deux menu pour trois plats principaux
@@ -38,10 +40,10 @@ export class Menu {
 
             for (let i=0; i < nbCartes; i++) {
                 cartes[i] = {
-                    nomCarte : this.carte.nomCarte(i),
-                    entree : entrees[getRandomInt(0, entrees.length)],
-                    platPrincipal : plats[getRandomInt(0, plats.length)],
-                    dessert : desserts[getRandomInt(0, desserts.length)]
+                    nomCarte : this.carte.nomsCartes(i),
+                    entree : entrees[Object.keys(entrees)[getRandomInt(0, Object.keys(entrees).length)]],
+                    platPrincipal : plats[Object.keys(plats)[getRandomInt(0, Object.keys(plats).length)]],
+                    dessert : desserts[Object.keys(desserts)[getRandomInt(0, Object.keys(desserts).length)]]
                 }
             }
 

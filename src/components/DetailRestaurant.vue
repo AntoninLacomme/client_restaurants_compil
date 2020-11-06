@@ -139,6 +139,7 @@ export default {
 
                     console.log("APPEL GENERATE MENU");
                     this.restaurant["menu"] = new Menu (new CarteDesPlats ()).generateMenu (this.restaurant.cuisine);
+                    console.log(this.restaurant);
                 });
         }
     },
