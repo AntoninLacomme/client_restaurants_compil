@@ -46,7 +46,7 @@
                             <label>Zipcode</label>
                             <md-input readonly v-model="restaurant.address.zipcode"/>
                         </md-field>
-                        <div style="height: 400px; width: 600px">
+                        <div class="map-centered" style="height: 400px; width: 600px">
                             <LMap
                                 @ready="mapReady"
                                 :zoom="zoom"
@@ -168,5 +168,9 @@ export default {
 
     .md-table {
         max-height: 50vh;
+    }
+
+    .map-centered {
+        margin: auto auto;
     }
 </style>

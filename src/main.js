@@ -6,7 +6,6 @@ import VueRouter from 'vue-router';
 import 'leaflet/dist/leaflet.css';
 
 import TableauRestaurant from './components/TableauRestaurant.vue';
-import RestaurantDetail from './components/RestaurantDetail.vue';
 import NewRestaurant from './components/NewRestaurant.vue';
 import DetailRestaurant from './components/DetailRestaurant.vue';
 
@@ -20,10 +19,6 @@ const router = new VueRouter ({
       {
         path: '/',
         component: TableauRestaurant
-      },
-      {
-        path: '/RestaurantDetail',
-        component: RestaurantDetail
       },
       {
         path: '/NewRestaurant',

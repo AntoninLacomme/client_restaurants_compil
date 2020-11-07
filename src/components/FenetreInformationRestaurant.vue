@@ -104,21 +104,8 @@
 
 
 <script>
-import Vue from 'vue'
-import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
-Vue.use(VueMaterial)
-
-/*
-import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
-import L from "leaflet";
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-    iconUrl: require("leaflet/dist/images/marker-icon.png"),
-    shadowUrl: require("leaflet/dist/images/marker-shadow.png")
-});*/
 
 export default {
     name: "FenetreInformationRestaurant",

@@ -1,20 +1,37 @@
 <template>
     <div>
-        <table>
-            <tr><th colspan="2">{{nomMenu}}</th></tr>
+        <md-list>
+            <caption @click="showMenu = !showMenu">{{nomMenu}}</caption>
+        <table v-if="showMenu">
             <tr>
                 <th>Entrée</th>
                 <td>{{nomEntree}}</td>
+                <td>{{prixEntree}} €</td>
             </tr>
             <tr>
                 <th>Plat Principal</th>
                 <td>{{nomPlat}}</td>
+                <td>{{prixPlat}} €</td>
             </tr>
             <tr>
                 <th>Dessert</th>
                 <td>{{nomDessert}}</td>
+                <td>{{prixDessert}} €</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="separator"></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="separator"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>{{prix}} €</td>
             </tr>
         </table>
+        </md-list>
+        
     </div>
 </template>
 
@@ -30,26 +47,23 @@ export default {
     },
 
     data: () => ({
+        showMenu : false,
+
         nomMenu: "",
         nomEntree: "",
         nomPlat: "",
         nomDessert: "",
-        prix: 0
+        prix: 0,
+        prixEntree: 0,
+        prixPlat: 0,
+        prixDessert: 0
     }),
 
     mounted: function () {
-        console.log(this.nom);
-        console.log(this.entree)
-        console.log(this.plat);
-        console.log(this.dessert);
-        // console.log("Calcul du prix minimal de la carte :");
-        // console.log(this.entree[1] + this.dessert[1] + this.plat.price[0]);
-        // console.log("Calcul du prix maximal de la carte :");
-        // console.log(this.entree[1] + this.dessert[1] + this.plat.price[1]);
-
-        // le prix du menu sera toujours le prix minimal de la somme des trois "morceaux" du menu :
-        console.log(this.plat[1])
-        this.prix = this.entree[1] + this.dessert[1] + this.plat[1].price[0]
+        this.prix = this.entree[1] + this.dessert[1] + this.plat[1].price[0];
+        this.prixEntree = this.entree[1];
+        this.prixPlat = this.plat[1].price[0];
+        this.prixDessert = this.dessert[1];
         this.nomMenu = this.nom;
         this.nomEntree = this.entree[0];
         this.nomPlat = this.plat[0];
@@ -59,5 +73,25 @@ export default {
 </script>
 
 <style scoped>
+    table {
+        width: 100%;
+    }
+
+    caption {
+        font-weight: bold;
+    }
+
+    th, td {
+        width: 45%;
+        text-align: center;
+    }
+
+    th:nth-child(3n) {
+        width: 10%;
+    }
+
+    td.separator {
+        border-bottom: solid thin gold;
+    }
 
 </style>
