@@ -13,12 +13,14 @@
                             <md-input readonly v-model="restaurant.cuisine"/>
                         </md-field>
 
-                        <md-table v-model="restaurant.menu" md-card>
+                        <!-- <md-table v-model="restaurant.menu" md-card>
                             <md-table-row slot="md-table-row" slot-scope="{item}">
                                 <md-table-cell md-label="Plat">{{item.plat}}</md-table-cell>
                                 <md-table-cell md-label="Prix">{{item.price}}.00 €</md-table-cell>
                             </md-table-row>
-                        </md-table>
+                        </md-table> -->
+
+                        <MenuRestaurant/>
                 </md-tab>
                 <md-tab md-label="Localisation">
                         <md-field>
@@ -86,8 +88,12 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require("leaflet/dist/images/marker-shadow.png")
 });
 
+import MenuRestaurant from './Menus/MenuRestaurant.vue';
+
 import {Menu} from '../assets/classes/Menu.js'
 import {CarteDesPlats} from '../assets/classes/CarteDesPlats.js'
+
+import {events} from '../main.js';
 
 export default {
     name: "DetailRestaurant",
@@ -95,7 +101,8 @@ export default {
         Redirection,
         LMap,
         LTileLayer,
-        LMarker
+        LMarker,
+        MenuRestaurant
     },
     data: () => ({
         id: "",
@@ -110,7 +117,7 @@ export default {
             cuisine: '',
             grades: [],
             name: '',
-            menu: []
+            menu: {}
         },
         zoom: 14,
         center: [40.71, -74],
@@ -137,9 +144,10 @@ export default {
                     this.center = [this.restaurant.address.coord[1],this.restaurant.address.coord[0]];
                     this.currentCenter = L.latLng(this.restaurant.address.coord[1],this.restaurant.address.coord[0]);
 
-                    console.log("APPEL GENERATE MENU");
-                    this.restaurant["menu"] = new Menu (new CarteDesPlats ()).generateMenu (this.restaurant.cuisine);
-                    console.log(this.restaurant);
+                    let menu = new Menu (new CarteDesPlats ()).generateMenu (this.restaurant.cuisine)
+                    this.restaurant["menu"] = menu;
+
+                    events.$emit("setMenu", menu);
                 });
         }
     },

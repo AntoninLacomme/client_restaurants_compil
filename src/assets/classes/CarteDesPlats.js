@@ -675,40 +675,40 @@ export class CarteDesPlats {
     entrees (cuisine) {
         return {
             Hamburgers: {
-                "Salade Verte": [2],
-                "Salade de Tomate": [2],
-                "Salade Oeufs Crudité": [3],
-                "Assortiment de Crudités": [3],
-                "Tartines": [3]
+                "Salade Verte": 2,
+                "Salade de Tomate": 2,
+                "Salade Oeufs Crudité": 3,
+                "Assortiment de Crudités": 3,
+                "Tartines": 3
             },
             American: "Hamburgers",
             Chicken: "Hamburgers",
             Chinese: {
-                "Mini rouleaux de printemps": [5],
-                "Rouleau de printemps au tourteau": [5],
-                "Soupe de raviolis aux crevette": [5],
-                "Brochettes de crevette": [5],
-                "Samoussas de crevette": [5],
-                "Nems aux crevette": [5]
+                "Mini rouleaux de printemps": 5,
+                "Rouleau de printemps au tourteau": 5,
+                "Soupe de raviolis aux crevette": 5,
+                "Brochettes de crevette": 5,
+                "Samoussas de crevette": 5,
+                "Nems aux crevette": 5
             },
             Japanese: "Chinese",
             Italian: {
-                "Carpaccio au pesto": [5],
-                "Asperges milanaises": [5],
-                "Calzone aux tomates": [3],
-                "Salade de Melon": [5],
-                "Carpaccio aux carpes": [5]
+                "Carpaccio au pesto": 5,
+                "Asperges milanaises": 5,
+                "Calzone aux tomates": 3,
+                "Salade de Melon": 5,
+                "Carpaccio aux carpes": 5
             },
             "Pizza/Italian": "Italian",
             Steak: "Hamburgers",
             French: {
-                "Mini Paté en croute": [5],
-                "Oeuf Mayonnaise": [3],
-                "Asperges grillées": [5],
-                "Terrine paysane": [5],
-                "Velouté de châteigne": [5],
-                "Tempura provencales": [5],
-                "Ouef à la coque et mouillettes": [3]
+                "Mini Paté en croute": 5,
+                "Oeuf Mayonnaise": 3,
+                "Asperges grillées": 5,
+                "Terrine paysane": 5,
+                "Velouté de châteigne": 5,
+                "Tempura provencales": 5,
+                "Ouef à la coque et mouillettes": 3
             },
             Delicatessen: "Hamburgers",
             "Ice Cream, Gelato, Yogurt, Ices": {
@@ -716,33 +716,33 @@ export class CarteDesPlats {
             Donuts: {
             },
             Spanish: {
-                "Gaspacho glacé": [5],
-                "Sardines catalanes": [5],
-                "Croustades de la mer andalouse": [5],
-                "Petit sandwitch ibérique": [5],
-                "Cornets de Jambon": [5]
+                "Gaspacho glacé": 5,
+                "Sardines catalanes": 5,
+                "Croustades de la mer andalouse": 5,
+                "Petit sandwitch ibérique": 5,
+                "Cornets de Jambon": 5
             },
             German: {
-                "Soupe de pomme de Terre": [3],
-                "Brioche Allemande": [3],
-                "Soupe paysanne": [3],
-                "Saumon mariné": [3]
+                "Soupe de pomme de Terre": 3,
+                "Brioche Allemande": 3,
+                "Soupe paysanne": 3,
+                "Saumon mariné": 3
             },
             SeaFood: "Hambrugers",
             Irish: "Hamburgers",
             African: "Hamburgers",
             Indian: {
-                "Salade Epinard / Pois Chiche": [3],
-                "Soupe froide de concombre": [3],
-                "Brochettes de rognons": [3],
-                "Soupe indienne glacée": [3]
+                "Salade Epinard / Pois Chiche": 3,
+                "Soupe froide de concombre": 3,
+                "Brochettes de rognons": 3,
+                "Soupe indienne glacée": 3
             },
             Mexican: {
-                "Trempette aux crevette": [5],
-                "Salade Mexicaine": [5],
-                "Mesclun au guacamole": [5],
-                "Purée de tomate Mexicaine": [3],
-                "Enchiladas": [5]
+                "Trempette aux crevette": 5,
+                "Salade Mexicaine": 5,
+                "Mesclun au guacamole": 5,
+                "Purée de tomate Mexicaine": 3,
+                "Enchiladas": 5
             },
             "Latin (Cuban, Dominican, Puerto Rican, South & Central American)": "Mexican",
             HotDogs: {
@@ -762,41 +762,41 @@ export class CarteDesPlats {
     desserts (cuisine) {
         return {
             Hamburgers: {
-                "Apple Dumpling Cobbler": [8],
-                "Cheesecake": [8],
-                "Pancake Myrtille": [8],
-                "Donuts": [4],
-                "Cookies": [4],
-                "Muffins": [4]
+                "Apple Dumpling Cobbler": 8,
+                "Cheesecake": 8,
+                "Pancake Myrtille": 8,
+                "Donuts": 4,
+                "Cookies": 4,
+                "Muffins": 4
             },
             American: "Hamburgers",
             Chicken: "Hamburgers",
             Chinese: {
-                "Boule de coco chinoise": [5],
-                "Flan à la fleur de rose": [5],
-                "Baignet de banane": [5],
-                "Sorbet aux litchis": [5],
-                "Riz gluant au lait de coco et à la mangue": [5]
+                "Boule de coco chinoise": 5,
+                "Flan à la fleur de rose": 5,
+                "Baignet de banane": 5,
+                "Sorbet aux litchis": 5,
+                "Riz gluant au lait de coco et à la mangue": 5
             },
             Japanese: "Chinese",
             Italian: {
-                "Pettole": [3],
-                "Zaletti": [3],
-                "Castagnaccio": [5],
-                "Sbrisolona": [5],
-                "Pastiera napolitaine": [5]
+                "Pettole": 3,
+                "Zaletti": 3,
+                "Castagnaccio": 5,
+                "Sbrisolona": 5,
+                "Pastiera napolitaine": 5
             },
             "Pizza/Italian": "Italian",
             Steak: "Hamburgers",
             French: {
-                "Baba au Rhum": [5],
-                "Paris-Brest": [5],
-                "Ile flottante": [5],
-                "Mille-Feuille": [5],
-                "Fondant au chocolat": [5],
-                "Crême Brulée": [5],
-                "Tarte Tatin": [5],
-                "Mousse au chocolat": [5]
+                "Baba au Rhum": 5,
+                "Paris-Brest": 5,
+                "Ile flottante": 5,
+                "Mille-Feuille": 5,
+                "Fondant au chocolat": 5,
+                "Crême Brulée": 5,
+                "Tarte Tatin": 5,
+                "Mousse au chocolat": 5
             },
             Delicatessen: "Hamburgers",
             "Ice Cream, Gelato, Yogurt, Ices": {
@@ -804,39 +804,39 @@ export class CarteDesPlats {
             Donuts: {
             },
             Spanish: {
-                "Churros": [5],
-                "Tarta de Santiago": [5],
-                "Tarta de queso": [5],
-                "Crême catalane": [5]
+                "Churros": 5,
+                "Tarta de Santiago": 5,
+                "Tarta de queso": 5,
+                "Crême catalane": 5
             },
             German: {
-                "Forêt Noire": [5],
-                "Sablé Viennois": [5],
-                "Chinois à la crême de noisette": [5],
-                "Strüdel tresse pomme-poire": [5],
-                "Stollen": [5],
-                "Rote Grütze": [5]
+                "Forêt Noire": 5,
+                "Sablé Viennois": 5,
+                "Chinois à la crême de noisette": 5,
+                "Strüdel tresse pomme-poire": 5,
+                "Stollen": 5,
+                "Rote Grütze": 5
             },
             SeaFood: "Hamburgers",
             Irish: "Hambrugers",
             African: {
-                "Tarte au Lait": [5],
-                "Biscuit bantou": [5],
-                "Kaak": [5],
-                "Beignets blofoto": [5]
+                "Tarte au Lait": 5,
+                "Biscuit bantou": 5,
+                "Kaak": 5,
+                "Beignets blofoto": 5
             },
             Indian: {
-                "Gulab Jamun": [5],
-                "Khir": [5],
-                "Ladoo": [5],
-                "Kulfi": [5]
+                "Gulab Jamun": 5,
+                "Khir": 5,
+                "Ladoo": 5,
+                "Kulfi": 5
             },
             Mexican: {
-                "Churros": [5],
-                "Cocada": [5],
-                "Tamales": [5],
-                "Pan de Elote": [5],
-                "Camotes": [5]
+                "Churros": 5,
+                "Cocada": 5,
+                "Tamales": 5,
+                "Pan de Elote": 5,
+                "Camotes": 5
             },
             "Latin (Cuban, Dominican, Puerto Rican, South & Central American)": "Mexican",
             HotDogs: {
@@ -853,7 +853,67 @@ export class CarteDesPlats {
         }[cuisine];
     }
 
-    hasCuisineMenu () {
+    getPercentAccompagnements (cuisine, percent) {
+        if (percent < 0 || percent > 100) {
+            return undefined;
+        }
+        if (typeof this.accompagnements(cuisine) == "string") {
+            return this.getPercentAccompagnements (this.accompagnements(cuisine), percent);
+        }
+
+        let res = {};
+        Object.keys(this.accompagnements(cuisine)).forEach ((key) => {
+            if (getRandomInt(0, 100) <= percent) { res[key] = this.accompagnements(cuisine)[key]; }
+        });
+        return res;
+    }
+
+    getPercentPlatsPrincipaux (cuisine, percent) {
+        if (percent < 0 || percent > 100) {
+            return undefined;
+        }
+        if (typeof this.platsPrincipaux(cuisine) == "string") {
+            return this.getPercentPlatsPrincipaux (this.platsPrincipaux(cuisine), percent);
+        }
+
+        let res = {};
+        Object.keys(this.platsPrincipaux(cuisine)).forEach ((key) => {
+            if (getRandomInt(0, 100) <= percent) { res[key] = this.platsPrincipaux(cuisine)[key]; }
+        });
+        return res;
+    }
+
+    getPercentEntrees (cuisine, percent) {
+        if (percent < 0 || percent > 100) {
+            return undefined;
+        }
+        if (typeof this.entrees(cuisine) == "string") {
+            return this.getPercentEntrees (this.entrees(cuisine), percent);
+        }
+
+        let res = {};
+        Object.keys(this.entrees(cuisine)).forEach ((key) => {
+            if (getRandomInt(0, 100) <= percent) { res[key] = this.entrees(cuisine)[key]; }
+        });
+        return res;
+    }
+
+    getPercentDessert (cuisine, percent) {
+        if (percent < 0 || percent > 100) {
+            return undefined;
+        }
+        if (typeof this.desserts(cuisine) == "string") {
+            return this.getPercentDessert (this.desserts(cuisine), percent);
+        }
+
+        let res = {};
+        Object.keys(this.desserts(cuisine)).forEach ((key) => {
+            if (getRandomInt(0, 100) <= percent) { res[key] = this.desserts(cuisine)[key]; }
+        });
+        return res;
+    }
+
+    hasCuisineMenu () { 
         return {
             Hamburgers: true, American: true, Chicken: true, Chinese: true, Japanese: true, Italian: true, "Pizza/Italian": true,
             Steak: true, French: true, Delicatessen: true, "Ice Cream, Gelato, Yogurt, Ices": false, Donuts: false, Spanish: true,
@@ -866,4 +926,8 @@ export class CarteDesPlats {
     hasMenu (cuisine) {
         return this.hasCuisineMenu()[cuisine];
     }
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * Math.floor(max - min)) + min;
 }

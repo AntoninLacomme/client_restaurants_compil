@@ -10,6 +10,8 @@ import RestaurantDetail from './components/RestaurantDetail.vue';
 import NewRestaurant from './components/NewRestaurant.vue';
 import DetailRestaurant from './components/DetailRestaurant.vue';
 
+export const events = new Vue ();
+
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 
