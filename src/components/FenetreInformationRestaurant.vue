@@ -27,7 +27,7 @@
                         <md-input v-model="actualRestaurant.cuisine" readonly></md-input>
                     </md-field>
                 </span> -->
-                <template v-if="actualRestaurant.address != undefined">  
+                <template >  
                     <span class="tableSetValuesRest">                        
                         <h1>
                             <router-link :to=linkedid>
@@ -39,15 +39,15 @@
                             Adresse
                             <router-view></router-view>
                         </h1>
-                        <md-field>
+                        <md-field v-if="actualRestaurant.address != undefined">
                             <label>Quartier :</label>
                             <md-input v-model="actualRestaurant.borough" readonly></md-input>
                         </md-field>  
-                        <md-field>
+                        <md-field v-if="actualRestaurant.address != undefined">
                             <label>Rue :</label>
                             <md-input v-model="actualRestaurant.address.street" readonly></md-input>
                         </md-field>  
-                        <md-field>
+                        <md-field v-if="actualRestaurant.address != undefined">
                             <label>Building</label>
                             <md-input v-model="actualRestaurant.address.building" readonly></md-input>
                         </md-field>
@@ -62,7 +62,7 @@
                         </md-field> -->
                         Pour les détails, cliquez sur la petite loupe.
                     </span>
-                    <span class="tableSetValuesRest"> 
+                    <span class="tableSetValuesRest" v-if="actualRestaurant.address != undefined"> 
                         <div class="map-centered" style="height: 400px; width: 450px">
                             <LMap
                                 @ready="mapReady"
@@ -87,7 +87,7 @@
                     <h1>Les notes du Jury</h1>
                     <md-table v-model="grades" md-fixed-header>
                         <md-table-row slot="md-table-row" slot-scope="{item}" md-selectable="single">
-                            <md-table-cell md-label="Date">{{item.date}}</md-table-cell>
+                            <md-table-cell md-label="Date">{{convertDate(item.date)}}</md-table-cell>
                             <md-table-cell md-label="Grade">{{item.grade}}</md-table-cell>
                             <md-table-cell md-label="Score">{{item.score}}</md-table-cell>
                         </md-table-row>
@@ -167,16 +167,16 @@ export default {
         },
         displayDialogDataRestaurant (restaurant) {
             this.actualRestaurant = restaurant;
-            
-            this.center = [this.actualRestaurant.address.coord[1],this.actualRestaurant.address.coord[0]];
-            this.currentCenter = L.latLng(this.actualRestaurant.address.coord[1],this.actualRestaurant.address.coord[0]);
-
+            console.log(this.actualRestaurant);
             this.grades = this.actualRestaurant.grades;
             this.linkedid = "/DetailRestaurant?id=" + this.actualRestaurant._id;
 
             if (restaurant.address != undefined) {
                 this.latitude = this.actualRestaurant.address.coord[1];
                 this.longitude = this.actualRestaurant.address.coord[0];
+
+                this.center = [this.actualRestaurant.address.coord[1],this.actualRestaurant.address.coord[0]];
+                this.currentCenter = L.latLng(this.actualRestaurant.address.coord[1],this.actualRestaurant.address.coord[0]);
             }
 
             // normalement ce code aurait permis d'afficher des menus aléatoires
@@ -206,6 +206,9 @@ export default {
         supprimerRestaurant (event) {
             event.preventDefault ();
             this.$parent.deleteRestaurant (this.actualRestaurant);
+        },
+        convertDate (date) {
+            return date.substring(0, date.indexOf("T"));
         }
     },
     mounted: function () {

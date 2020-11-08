@@ -23,6 +23,7 @@
                         <MenuRestaurant/>
                 </md-tab>
                 <md-tab md-label="Localisation">
+                    <div v-if="restaurant.address != undefined">
                         <md-field>
                             <label>Quartier</label>
                             <md-input readonly v-model="restaurant.borough"/>
@@ -61,9 +62,10 @@
                                 </template>
                             </LMap>    
                         </div>   
+                    </div>
                 </md-tab>
                 <md-tab md-label="Grades">
-
+                    <div v-if="restaurant.grades != undefined"></div>
                     <md-table v:on="addNewGrade=addGrade" v-model="restaurant.grades" md-card>
                         <md-table-row slot="md-table-row" slot-scope="{item}">
                             <md-table-cell md-label="Date">{{convertDate(item.date)}}</md-table-cell>
@@ -141,9 +143,10 @@ export default {
                 .then((data) => {
                     console.log(data);
                     this.restaurant = data.restaurant;
-                    this.center = [this.restaurant.address.coord[1],this.restaurant.address.coord[0]];
-                    this.currentCenter = L.latLng(this.restaurant.address.coord[1],this.restaurant.address.coord[0]);
-
+                    if (this.restaurant.address != undefined) {
+                        this.center = [this.restaurant.address.coord[1],this.restaurant.address.coord[0]];
+                        this.currentCenter = L.latLng(this.restaurant.address.coord[1],this.restaurant.address.coord[0]);
+                    }
                     let menu = new Menu (new CarteDesPlats ()).generateMenu (this.restaurant.cuisine)
                     this.restaurant["menu"] = menu;
 
@@ -152,7 +155,7 @@ export default {
         },
         convertDate (date) {
             return date.substring(0, date.indexOf("T"));
-            }
+        }
     },
     mounted: function () {
         this.id = this.$router.history.current.query.id;
