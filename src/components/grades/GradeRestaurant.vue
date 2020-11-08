@@ -35,7 +35,7 @@
                         <!-- LA DATE -->
                 <md-field :class="getValidationClass('date')">
                     <label>Date</label>
-                    <md-datepicker v-model="form.date" name="date" id="date" :disabled="sending"/>
+                    <md-datepicker v-model="form.date" name="date" id="date" :disabled="sending" md-immediately/>
                     <span class="md-error" v-if="!$v.form.date.required">La date de la note doit être saisie</span>
                 </md-field>
                 </md-card-content>

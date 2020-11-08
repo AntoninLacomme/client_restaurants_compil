@@ -91,7 +91,7 @@ export default {
     }
 
     td.separator {
-        border-bottom: solid thin gold;
+        border-bottom: solid thin #448aff;
     }
 
 </style>

@@ -60,21 +60,6 @@
 
 
 <script>
-import Vue from 'vue'
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
-Vue.use(VueMaterial)
-
-import * as VueGoogleMaps from 'vue2-google-maps'
- 
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyBjjdVYZrjcMbzJ6KS37f06P_ltlxjI2dE',
-    libraries: 'places'
-  }
-})
-
 
 import FenetreInformationRestaurant from './FenetreInformationRestaurant.vue';
 import Redirection from './Redirection';
@@ -133,6 +118,10 @@ export default {
                     let c = this.countRestaurants / this.nbRestaurants;
                     if ((c | 0) < c) {
                         c = (c | 0) + 1;
+                    }
+
+                    if (this.page > c) {
+                        this.page = c;
                     }
                     this.messNbPages = this.page + " / " + c;
 

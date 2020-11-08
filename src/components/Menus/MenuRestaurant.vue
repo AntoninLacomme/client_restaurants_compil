@@ -16,11 +16,11 @@
                     <md-list>
                         <md-subheader class="md-primary">Nos entrées</md-subheader>
                         <md-list-item 
-                            v-for="(prix, plat) in menu.entrees"
-                            :key = "plat"
+                            v-for="(prix, entree) in menu.entrees"
+                            :key = "entree"
                         >
                             <table class="presentation">
-                                <tr><th>{{plat}}</th><th>{{prix}} €</th></tr>
+                                <tr><th>{{entree}}</th><th>{{prix}} €</th></tr>
                             </table>
                         </md-list-item>
 
@@ -48,11 +48,11 @@
 
                         <md-subheader class="md-primary">Nos Accompagnements</md-subheader>
                         <md-list-item 
-                            v-for="(prix, plat) in menu.accompagnements"
-                            :key = "plat"
+                            v-for="(prix, accompagnement) in menu.accompagnements"
+                            :key = "accompagnement"
                         >
                             <table class="presentation">
-                                <tr><th>{{plat}}</th><th>{{prix}} €</th></tr>
+                                <tr><th>{{accompagnement}}</th><th>{{prix}} €</th></tr>
                             </table>
                         </md-list-item>
 
@@ -60,11 +60,11 @@
 
                         <md-subheader class="md-primary">Nos Desserts</md-subheader>
                         <md-list-item 
-                            v-for="(prix, plat) in menu.desserts"
-                            :key = "plat"
+                            v-for="(prix, dessert) in menu.desserts"
+                            :key = "dessert"
                         >
                             <table class="presentation">
-                                <tr><th>{{plat}}</th><th>{{prix}} €</th></tr>
+                                <tr><th>{{dessert}}</th><th>{{prix}} €</th></tr>
                             </table>
                         </md-list-item>
                     </md-list>
@@ -89,13 +89,14 @@ export default {
     }),
     mounted : function() {
         events.$on("setMenu", (menu) => {
-            this.menu = menu;
-
-            console.log(menu);
+            this.setMenu (menu);
         });
     },
 
     methods : {
+        setMenu (menu) {
+            this.menu = menu;
+        },
         randintBetween (x, y) {
             return Math.floor(Math.random() * Math.floor(y - x)) + x;
         }
@@ -105,22 +106,18 @@ export default {
 
 <style scoped>
     .carteMenu {
-        border: solid thin gold;
+        border: solid thin #448aff;
         width: calc(100% - 1em);
         margin: 0.5em;
         padding: 0.5em;
     }
-
-    .carteMenu:hover {
-        background-color: rgb(220, 220, 220);
-    }
-
     .full-line {
         width: calc(50% - 2em);
         display: inline-block;
         vertical-align: top;
         max-height: 65vh;
         overflow: auto;
+        border: solid thin rgba(200, 200, 200, 0.12);
     }
 
     table {
@@ -130,9 +127,6 @@ export default {
     .annotations > td {
         font-size: 10px;
         font-style: italic;
-    }
-
-    .presentation {
     }
 
     .presentation > tr:nth-child(1) > th:nth-child(1) {

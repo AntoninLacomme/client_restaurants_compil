@@ -66,7 +66,7 @@
 
                     <md-table v:on="addNewGrade=addGrade" v-model="restaurant.grades" md-card>
                         <md-table-row slot="md-table-row" slot-scope="{item}">
-                            <md-table-cell md-label="Date">{{item.date}}</md-table-cell>
+                            <md-table-cell md-label="Date">{{convertDate(item.date)}}</md-table-cell>
                             <md-table-cell md-label="grade">{{item.grade}}</md-table-cell>
                             <md-table-cell md-label="score">{{item.score}}</md-table-cell>
                         </md-table-row>
@@ -149,7 +149,10 @@ export default {
 
                     events.$emit("setMenu", menu);
                 });
-        }
+        },
+        convertDate (date) {
+            return date.substring(0, date.indexOf("T"));
+            }
     },
     mounted: function () {
         this.id = this.$router.history.current.query.id;
