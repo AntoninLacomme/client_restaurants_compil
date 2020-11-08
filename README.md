@@ -23,7 +23,7 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-=1. Page générale
+### 1. Page générale
 L'application se lance sur un affichage de la liste des restaurants.
 A gauche se trouvent les paramètres de recherche. De bas en haut :
     - le nombre de restaurants trouvés,
@@ -41,7 +41,7 @@ Cette pop-up contient 3 onglets, "General", "Les notes du Jury" et "Gestion Admi
 
 Pour accéder aux détails d'un restaurant, il faut cliquer sur la petite loupe de son onglet Général (à gauche de Adresse)
 
-=2. Les Détails du restaurant :
+### 2. Les Détails du restaurant :
 Les Détails du restaurant se découpent en trois points: "Restaurant", "Localisation", et "Grades"
 
 - Dans Restaurant, on trouve, le nom et le type de cuisine du restaurant. On trouve également les menus proposés par ce restaurant, ainsi que sa carte complète. Cliquez sur un menu permet d'afficher son détail, qui se compose d'une entrée, d'un plat et d'un dessert.
@@ -52,12 +52,12 @@ Les menus et la carte sont générés aléatoirement, et changeront donc d'un re
 - Dans Grades, on retrouve toutes les notes attribuées à ce restaurant.
 
 
-=3. Navigation :
+### 3. Navigation :
 Dans le coin supérieur droit de l'écran, se trouve un petit menu statique. Passez la sourie dessus pour faire apparaitre les choix.
 - Le premier onglet (la maison) permet de retourner à la page principale.
 - Le second onglet (le +) permet d'ajouter un restaurant à la base de donnée
 
-=4. Ajouter un Restaurant :
+### 4. Ajouter un Restaurant :
 L'ajout d'un restaurant passe par trois phases (notez qu'à chaque phase, un bouton back permet de revenir à la phase précédante afin d'apporter des correctifs)
 - Premièrement, il faut saisir l'adresse. Il faut choisir un Quartier, saisir le nom de la rue, du batiment et le zipcode (attention, un zipcode se compose exactement de 5 entiers, ex: 00000). Une sécurité a été mise en place pour s'assurer que tous les champs sont bien remplis. Pour remplir les coordonnées en latitude et longitude, il faut cliquer que la mini-map. Celà place un curseur, que l'on peut dépacer en recliquant sur la mini-map. Le curseur indique remplira les chalos latitude et longitude. 
 
